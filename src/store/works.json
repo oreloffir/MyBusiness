@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "date": 1577829600000,
+      "contact": "נתנאל מאן",
+      "companyType": 1,
+      "licensePlate": "56-520-60",
+      "workTime": 2,
+      "description": "תיקון ניתוק בידית הילוכים",
+      "workPrice": 600,
+      "partsPrice": 0,
+      "partsCost": 0,
+      "paid": 600,
+      "paymentInstrument": "CASH",
+      "notes": ""
+    },
+    {
+      "id": 2,
+      "date": 1577916000000,
+      "contact": "מ.נ פינוי פסולת",
+      "companyType": 1,
+      "licensePlate": "21-470-70",
+      "workTime": 4,
+      "description": "המשך שעות תמיכה לתקלת לחץ שמן נמוך",
+      "workPrice": 825,
+      "partsPrice": 0,
+      "partsCost": 0,
+      "paid": 825,
+      "paymentInstrument": "CASH",
+      "notes": "חשבונית ראמי"
+    }
+  ]
+}
