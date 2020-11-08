@@ -11,7 +11,8 @@
       "workPrice": 600,
       "partsPrice": 0,
       "partsCost": 0,
-      "paid": 600,
+      "paidSum": 600,
+      "paid": true,
       "paymentInstrument": "CASH",
       "notes": ""
     },
@@ -26,9 +27,25 @@
       "workPrice": 825,
       "partsPrice": 0,
       "partsCost": 0,
-      "paid": 825,
+      "paidSum": 825,
+      "paid": true,
       "paymentInstrument": "CASH",
       "notes": "חשבונית ראמי"
+    },
+    {
+      "id": 3,
+      "date": "01/10/20",
+      "contact": "עידו",
+      "companyType": 1,
+      "licensePlate": "82-914-32",
+      "workTime": "",
+      "description": "תיקון קצר לפנס ראשי שמאל כולל נורה",
+      "workPrice": 350,
+      "partsPrice": "",
+      "partsCost":0,
+      "paidSum": "",
+      "paymentInstrument": "",
+      "notes": ""
     }
   ]
 }

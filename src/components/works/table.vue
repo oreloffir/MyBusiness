@@ -7,6 +7,8 @@
                 :headers="headers"
                 :search="search"
                 :custom-filter="searchFilter"
+                :fixed-header="true"
+                :height="tableHeight"
         >
             <template v-slot:top>
                 <v-text-field
@@ -20,7 +22,7 @@
             </template>
             <template v-slot:item.actions="{ item }">
                 <v-icon @click="edit(item)">mdi-briefcase-edit</v-icon>
-                <v-icon @click="edit(item)">mdi-delete-circle</v-icon>
+                <v-icon @click="deleteWork(item)">mdi-delete-circle</v-icon>
             </template>
             <template v-slot:body.append>
                 <tr>
@@ -38,12 +40,14 @@
 </template>
 
 <script>
+    import {mapActions} from 'vuex';
+
     export default {
         name : "worksTable",
-        props: {
+        props : {
             works : {
-                type: Array,
-                default: function () {
+                type : Array,
+                default : () => {
                     return [];
                 }
             }
@@ -61,12 +65,12 @@
                         text : 'תאריך',
                         align : 'start',
                         value : 'date',
-                        dataType: 'Date',
-                        width: 100,
+                        dataType : 'Date',
+                        width : 100,
                         filter : value => {
                             if (!parseInt(this.month)) return true;
 
-                            return new Date(value).getMonth() + 1  === parseInt(this.month);
+                            return new Date(value).getMonth() + 1 === parseInt(this.month);
                         },
                     },
                     {
@@ -74,29 +78,37 @@
                         value : 'contact',
                     },
                     { text : 'לקוח', value : 'companyType' },
-                    { text : 'לוחית רישוי', value : 'licensePlate' },
+                    { text : 'לוחית רישוי', value : 'licensePlate', width : 95 },
                     { text : 'זמן עבודה', value : 'workTime' },
-                    { text : 'תיאור עבודה', value : 'description' },
+                    { text : 'תיאור עבודה', value : 'description', width : 350, height : 100 },
                     { text : 'מחיר עבודה', value : 'workPrice' },
                     { text : 'מחיר חלקים', value : 'partsPrice' },
                     { text : 'הוצאות', value : 'partsCost' },
-                    { text : 'שולם', value : 'paid' },
+                    { text : 'שולם', value : 'paidSum' },
                     { text : 'אמצעי תשלום', value : 'paymentInstrument' },
                     { text : 'הערות', value : 'notes', sortable : false },
-                    { text : 'פעולות', value: 'actions', sortable : false, width: 100 },
+                    { text : 'פעולות', value : 'actions', sortable : false, width : 100 },
                 ]
             },
+            tableHeight() {
+                return document.body.clientHeight - 230;
+            }
         },
         methods : {
+            ...mapActions({
+                editWork : 'works/editWork',
+                deleteWork : 'works/deleteWork'
+            }),
+            edit(workCard) {
+                this.editWork(workCard);
+                this.$emit('openModal');
+            },
             searchFilter(value, search, item) {
                 return value != null && search != null &&
                     value.toString().toLowerCase().indexOf(search.toLowerCase()) !== -1
             },
-            dateString(timestamp){
+            dateString(timestamp) {
                 return new Date(timestamp).toLocaleDateString();
-            },
-            edit(item){
-                this.$emit('edit', item);
             },
             filterOnlyCapsText(value, search, item) {
                 return value != null &&
@@ -108,6 +120,5 @@
     }
 </script>
 
-<style scoped>
-
+<style>
 </style>

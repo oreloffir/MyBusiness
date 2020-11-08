@@ -1,12 +1,11 @@
 <template>
     <v-row>
-        <v-dialog
-                v-model="dialog.show"
-                persistent
-                max-width="600px"
+        <v-dialog v-model="show"
+                  max-width="600px"
+                  persistent
         >
             <template v-slot:activator="{ on, attr }">
-                <v-btn class="mx-sm-4" v-bind="attr" v-on="on">
+                <v-btn class="mx-sm-4" v-bind="attr" v-on="on" @click="show = true">
                     <v-icon>mdi-plus</v-icon>
                     <span>הוסף עבודה חדשה</span>
                 </v-btn>
@@ -22,7 +21,7 @@
                                 <v-text-field
                                         label="* תאריך"
                                         v-model="workCard.date"
-                                        :input="dateString(workCard.date)"
+                                        :input="dateString"
                                         required
                                 ></v-text-field>
                             </v-col>
@@ -113,17 +112,15 @@
                     <v-btn
                             color="blue darken-1"
                             text
-                            @click="close"
-                    >
-                        Close
-                    </v-btn>
+                            @click="show = false"
+                            v-text="'Close'"
+                    ></v-btn>
                     <v-btn
                             color="blue darken-1"
                             text
                             @click="save"
-                    >
-                        Save
-                    </v-btn>
+                            v-text="'Save'"
+                    ></v-btn>
                 </v-card-actions>
             </v-card>
         </v-dialog>
@@ -131,42 +128,43 @@
 </template>
 
 <script>
+    import {mapActions, mapGetters} from 'vuex';
+
     export default {
         name : "modal",
         props : {
-            dialog : {
-                type : Object,
-                default() {
-                    return {
-                        show : false,
-                        data : {}
-                    }
-                }
+            value : {
+                type : Boolean,
+                default : false
             },
         },
         data() {
             return {}
         },
         computed : {
-            workCard() {
-                return this.dialog.data.workCard || {};
+            ...mapGetters({
+                workCard : 'works/modalWorkCard'
+            }),
+            show : {
+                get() {
+                    return this.value
+                },
+                set(value) {
+                    this.$emit('input', value)
+                }
+            },
+            dateString() {
+                return new Date(this.workCard.date).toLocaleDateString();
             }
         },
         methods : {
+            ...mapActions({
+                saveWork : 'works/updateWork'
+            }),
             save() {
-                this.$emit('save', this.workCard);
-                this.close();
+                this.saveWork(this.workCard);
+                this.show = false;
             },
-            close() {
-                this.dialog.show = false;
-            },
-            dateString(timestamp) {
-                return new Date(timestamp).toLocaleDateString();
-            }
         }
     }
 </script>
-
-<style scoped>
-
-</style>
