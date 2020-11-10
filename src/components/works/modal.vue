@@ -5,7 +5,7 @@
                   persistent
         >
             <template v-slot:activator="{ on, attr }">
-                <v-btn class="mx-sm-4" v-bind="attr" v-on="on" @click="show = true">
+                <v-btn class="mx-sm-4" v-bind="attr" v-on="on" @click="add">
                     <v-icon>mdi-plus</v-icon>
                     <span>הוסף עבודה חדשה</span>
                 </v-btn>
@@ -159,8 +159,13 @@
         },
         methods : {
             ...mapActions({
+                addWork : 'works/newWork',
                 saveWork : 'works/updateWork'
             }),
+            add() {
+                this.addWork(this.workCard);
+                this.show = true;
+            },
             save() {
                 this.saveWork(this.workCard);
                 this.show = false;

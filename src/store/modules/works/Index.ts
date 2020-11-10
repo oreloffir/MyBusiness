@@ -1,56 +1,69 @@
 import Vue from "vue";
 // import axios from 'axios';
 import worksData from "../../works.json";
+import WorkCard from "../../../utils/workCard/WorkCard";
 
 // Indicates if the module is namespaced.
 const namespaced = true;
 
 // The module state.
 const state = {
-    worksData: worksData.data
+    worksData: worksData.data || [],
+    modalWorkCard: null,
 };
 
 // The module getters.
 const getters = {
-    modalWorkCard(state){
-        console.log(state.worksData, state.worksData ? state.worksData[state.worksData.length -1].id : null);
-        const  lastId = state.worksData ? state.worksData[state.worksData.length -1].id : null;
-
-        return {
-            id: lastId ? lastId + 1 : null,
-            date: Date.now(),
-            contact: null,
-            companyType: 1,
-            licensePlate: 'XX-XXX-XX',
-            workTime: null,
-            description: null,
-            workPrice: 0,
-            partsPrice: 0,
-            partsCost: 0,
-            paidSum: 0,
-            paid: false,
-            paymentInstrument: null,
-            notes: null
+    modalWorkCard(state, getters) {
+        if(!state.modalWorkCard){
+            return {...getters.emptyWorkCard}
         }
+
+        return state.modalWorkCard;
+    },
+    emptyWorkCard(state){
+        const lastId = state.worksData ? state.worksData[state.worksData.length - 1].id : null;
+
+        return new WorkCard(
+            lastId ? lastId + 1 : null,
+            Date.now().toString(),
+            '',
+            1,
+            'XX-XXX-XX',
+            0,
+            '',
+            0,
+            0,
+            0,
+            0,
+            false,
+            '',
+            '');
     }
 };
 
 // The module actions.state
 const actions = {
-    updateWork({state, commit}, workData: any) {
-        const existingWorkCard = state.worksData.filter((workCard) => {
+    newWork({state, commit, getters}) {
+        if (state.modalWorkCard) {
+            commit('resetModalWorkCard', getters.emptyWorkCard);
+        }
+    },
+    updateWork({state, commit, getters}, workData: any) {
+        const existingWorkCard = state.worksData.filter((workCard: WorkCard) => {
             return workCard.id === workData.id;
         }).pop();
 
         if (existingWorkCard) {
             commit('updateWork', workData);
-        }else{
+        } else {
             commit('addWork', workData)
         }
 
-        commit('resetModalWorkCard')
+        commit('resetModalWorkCard', getters.emptyWorkCard);
+
     },
-    editWork({commit}, workData: any) {
+    editWork({commit}, workData: WorkCard) {
         commit('setModalWorkCard', workData);
     },
     deleteWork({commit}, workData: any) {
@@ -70,53 +83,38 @@ const mutations = {
      * Set all the section from server to store.
      *
      * @param state
-     * @param sections
+     * @param works
      */
-    setWorks(state: any, works: object) {
+    setWorks(state: any, works: WorkCard) {
         Vue.set(state, 'worksData', works);
     },
-    setModalWorkCard(state: any, workData: object) {
-        state.modalWorkCard = workData;
+    setModalWorkCard(state: any, workData: WorkCard) {
+        Vue.set(state, 'modalWorkCard', workData);
     },
-    deleteWork(state: any, workData: object) {
-        const existingWorkCardIndex = state.worksData.findIndex((workCard) => {
+    resetModalWorkCard(state: any, workData: WorkCard) {
+        Vue.set(state, 'modalWorkCard', workData);
+    },
+    deleteWork(state: any, workData: WorkCard) {
+        const existingWorkCardIndex = state.worksData.findIndex((workCard: WorkCard) => {
             return workCard.id === workData.id;
         });
-        console.log('deleteWork', existingWorkCardIndex);
+
         state.worksData.splice(existingWorkCardIndex, 1);
     },
-    addWork(state: any, workData: object) {
+    addWork(state: any, workData: WorkCard) {
         state.worksData.push({...workData});
     },
-    updateWork(state: any, workData: object) {
-        const existingWorkCardIndex = state.worksData.findIndex((workCard) => {
+    updateWork(state: any, workData: WorkCard) {
+        const existingWorkCardIndex = state.worksData.findIndex((workCard: any) => {
             return workCard.id === workData.id;
         });
 
-        if (existingWorkCardIndex >= 0){
+        if (existingWorkCardIndex >= 0) {
             Vue.set(state.worksData, existingWorkCardIndex, workData);
-        }else{
+        } else {
             state.worksData.push(workData);
         }
-    },
-    resetModalWorkCard(state: any) {
-        state.modalWorkCard = {
-            date: Date.now(),
-            contact: null,
-            companyType: 1,
-            licensePlate: 'XX-XXX-XX',
-            workTime: null,
-            description: null,
-            workPrice: 0,
-            partsPrice: 0,
-            partsCost: 0,
-            paidSum: 0,
-            paid: false,
-            paymentInstrument: null,
-            notes: null
-
-        }
-    },
+    }
 };
 
 // Export module.
