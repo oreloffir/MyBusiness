@@ -8,7 +8,7 @@ const namespaced = true;
 
 // The module state.
 const state = {
-    worksData: worksData.data || [],
+    worksData: [],
     modalWorkCard: null,
 };
 
@@ -22,10 +22,10 @@ const getters = {
         return state.modalWorkCard;
     },
     emptyWorkCard(state){
-        const lastId = state.worksData ? state.worksData[state.worksData.length - 1].id : null;
+        const lastId = state.worksData.length ? state.worksData[state.worksData.length - 1].id : null;
 
         return new WorkCard(
-            lastId ? lastId + 1 : null,
+            lastId ? lastId + 1 : 1,
             Date.now().toString(),
             '',
             1,
@@ -44,6 +44,11 @@ const getters = {
 
 // The module actions.state
 const actions = {
+    initialize({state, commit, dispatch}){
+        worksData.data.forEach(workData => {
+            dispatch('updateWork', workData)
+        })
+    },
     newWork({state, commit, getters}) {
         if (state.modalWorkCard) {
             commit('resetModalWorkCard', getters.emptyWorkCard);

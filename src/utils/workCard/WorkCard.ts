@@ -16,10 +16,6 @@ export default class WorkCard {
         public paymentInstrument: string,
         public notes: string
     ) {
-
-        console.log("WorkCard constructor:");
-        console.log(this.id, this.date, this.contact, this.companyType, this.licensePlate, this.workTime, this.description, this.workPrice, this.partsPrice, this.partsCost, this.paidSum, this.paid, this.paymentInstrument);
-        console.log();
     }
 }
 

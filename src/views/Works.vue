@@ -6,7 +6,7 @@
 </template>
 
 <script>
-    import {mapState} from 'vuex';
+    import {mapState, mapActions} from 'vuex';
     import WorksTable from '../components/works/table';
     import WorksModal from '../components/works/modal';
 
@@ -26,9 +26,15 @@
             }),
         },
         methods : {
+            ...mapActions({
+                init : 'works/initialize'
+            }),
             openModal(){
                 this.showModal = true;
             }
+        },
+        created(){
+            this.init();
         }
     }
 </script>
