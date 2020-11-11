@@ -3,6 +3,21 @@ import Vue from "vue";
 import worksData from "../../works.json";
 import WorkCard from "../../../utils/workCard/WorkCard";
 
+interface VuexStateInterface {
+        worksData: Array<WorkCard>;
+        modalWorkCard: WorkCard;
+}
+interface VuexGettersInterface {
+    modalWorkCard: Record<string, WorkCard>;
+    emptyWorkCard: Record<string, WorkCard>;
+}
+interface VuexInterface {
+    commit: Function;
+    dispatch: Function;
+    getters: VuexGettersInterface;
+    state: VuexStateInterface;
+}
+
 // Indicates if the module is namespaced.
 const namespaced = true;
 
@@ -14,14 +29,14 @@ const state = {
 
 // The module getters.
 const getters = {
-    modalWorkCard(state, getters) {
+    modalWorkCard(state: VuexStateInterface, getters: VuexGettersInterface) {
         if(!state.modalWorkCard){
             return {...getters.emptyWorkCard}
         }
 
         return state.modalWorkCard;
     },
-    emptyWorkCard(state){
+    emptyWorkCard(state: VuexStateInterface){
         const lastId = state.worksData.length ? state.worksData[state.worksData.length - 1].id : null;
 
         return new WorkCard(
@@ -44,17 +59,17 @@ const getters = {
 
 // The module actions.state
 const actions = {
-    initialize({state, commit, dispatch}){
+    initialize({dispatch}: VuexInterface){
         worksData.data.forEach(workData => {
             dispatch('updateWork', workData)
         })
     },
-    newWork({state, commit, getters}) {
+    newWork({state, commit, getters}: VuexInterface) {
         if (state.modalWorkCard) {
             commit('resetModalWorkCard', getters.emptyWorkCard);
         }
     },
-    updateWork({state, commit, getters}, workData: any) {
+    updateWork({state, commit, getters}: VuexInterface, workData: any) {
         const existingWorkCard = state.worksData.filter((workCard: WorkCard) => {
             return workCard.id === workData.id;
         }).pop();
@@ -68,11 +83,11 @@ const actions = {
         commit('resetModalWorkCard', getters.emptyWorkCard);
 
     },
-    editWork({commit}, workData: WorkCard) {
+    editWork({commit}: VuexInterface, workData: WorkCard) {
         commit('setModalWorkCard', workData);
     },
-    deleteWork({commit}, workData: any) {
-        const existingWorkCard = state.worksData.filter((workCard) => {
+    deleteWork({commit}: VuexInterface, workData: any) {
+        const existingWorkCard = state.worksData.filter((workCard: WorkCard) => {
             return workCard.id === workData.id;
         }).pop();
 
@@ -110,7 +125,7 @@ const mutations = {
         state.worksData.push({...workData});
     },
     updateWork(state: any, workData: WorkCard) {
-        const existingWorkCardIndex = state.worksData.findIndex((workCard: any) => {
+        const existingWorkCardIndex = state.worksData.findIndex((workCard: WorkCard) => {
             return workCard.id === workData.id;
         });
 
