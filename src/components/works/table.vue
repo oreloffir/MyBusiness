@@ -18,7 +18,7 @@
                 ></v-text-field>
             </template>
             <template v-slot:item.date="{ item }">
-                <span>{{ dateString(item.date) }}</span>
+                <span>{{ dateString(item) }}</span>
             </template>
             <template v-slot:item.actions="{ item }">
                 <v-icon @click="edit(item)">mdi-briefcase-edit</v-icon>
@@ -41,6 +41,7 @@
 
 <script>
     import {mapActions} from 'vuex';
+    import WorkCard from "../../utils/workCard/WorkCard";
 
     export default {
         name : "worksTable",
@@ -107,15 +108,15 @@
                 return value != null && search != null &&
                     value.toString().toLowerCase().indexOf(search.toLowerCase()) !== -1
             },
-            dateString(timestamp) {
-                return new Date(timestamp).toLocaleDateString();
-            },
             filterOnlyCapsText(value, search, item) {
                 return value != null &&
                     search != null &&
                     typeof value === 'string' &&
                     value.toString().toLocaleUpperCase().indexOf(search) !== -1
             },
+            dateString(item) {
+                return new WorkCard(item).dateString;
+            }
         }
     }
 </script>

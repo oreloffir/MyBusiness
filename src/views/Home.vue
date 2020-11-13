@@ -1,7 +1,6 @@
 <template>
   <div class="home">
-    <H1>Home</H1>
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <HelloWorld msg="Yoel & Cohcav Transportation"/>
   </div>
 </template>
 

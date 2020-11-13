@@ -18,12 +18,30 @@
                     <v-container>
                         <v-row>
                             <v-col cols="12" sm="6" md="4">
-                                <v-text-field
-                                        label="* תאריך"
-                                        v-model="workCard.date"
-                                        :input="dateString"
-                                        required
-                                ></v-text-field>
+                                <v-menu
+                                        v-model="dateMenu"
+                                        :close-on-content-click="false"
+                                        transition="scale-transition"
+                                        offset-y
+                                        max-width="290px"
+                                        min-width="290px"
+                                >
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-text-field
+                                                v-model="workCard.dateString"
+                                                label="* תאריך"
+                                                hint="פורמט DD/MM/YYYY"
+                                                readonly
+                                                v-bind="attrs"
+                                                v-on="on"
+                                        ></v-text-field>
+                                    </template>
+                                    <v-date-picker
+                                            v-model="date"
+                                            no-title
+                                            @input="dateMenu = false"
+                                    ></v-date-picker>
+                                </v-menu>
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
                                 <v-text-field label="איש קשר"
@@ -139,7 +157,9 @@
             },
         },
         data() {
-            return {}
+            return {
+                dateMenu: false,
+            }
         },
         computed : {
             ...mapGetters({
@@ -153,9 +173,17 @@
                     this.$emit('input', value)
                 }
             },
-            dateString() {
-                return new Date(this.workCard.date).toLocaleDateString();
-            }
+            date : {
+                get() {
+                    const date = new Date(this.workCard.date).toISOString().substr(0, 10);
+                    console.log('get', date);
+
+                    return date;
+                },
+                set(value) {
+                    this.workCard.date = Date.parse(value);
+                }
+            },
         },
         methods : {
             ...mapActions({
@@ -169,7 +197,7 @@
             save() {
                 this.saveWork(this.workCard);
                 this.show = false;
-            },
+            }
         }
     }
 </script>
