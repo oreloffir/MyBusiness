@@ -1,11 +1,9 @@
-import { db, worksCollection } from '../../firebase/';
+import { db } from '../../firebase/';
 
 export default new class DBConnector {
-    constructor(){
-        console.log("DBConnector constructor");
-    }
+    private _DB = db;
 
     get worksCollection() {
-        return worksCollection;
+        return this._DB.ref('works');
     }
 }

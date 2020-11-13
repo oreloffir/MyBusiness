@@ -89,7 +89,7 @@ const actions = {
         }).pop();
 
         delete workData.data;
-        DBConnector.worksCollection.child(workData.id).update(workData);
+        DBConnector.worksCollection.child(String(workData.id)).update(workData);
 
         if (existingWorkCard) {
             commit('updateWork', workData);
@@ -111,7 +111,7 @@ const actions = {
         }).pop();
 
         if (existingWorkCard) {
-            DBConnector.worksCollection.child(existingWorkCard.id).remove();
+            DBConnector.worksCollection.child(String(existingWorkCard.id)).remove();
 
             commit('deleteWork', existingWorkCard);
         }

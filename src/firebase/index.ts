@@ -18,9 +18,5 @@ firebase.initializeApp(firebaseConfig);
 
 // utils
 const db = firebase.database();
-const worksCollection = db.ref('/works');
 
-export {
-    db,
-    worksCollection
-}
+export { db }
