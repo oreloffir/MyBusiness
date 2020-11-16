@@ -1,3 +1,5 @@
+import WorkCardDTO from './WorkCardDTO';
+
 export default class WorkCard {
     public id: number;
     public date: number;
@@ -5,6 +7,8 @@ export default class WorkCard {
     public companyType: number;
     public licensePlate: string;
     public workTime: number;
+    public startTime: string;
+    public endTime: string;
     public description: string;
     public workPrice: number;
     public partsPrice: number;
@@ -14,22 +18,7 @@ export default class WorkCard {
     public paymentInstrument: string;
     public notes: string;
 
-    constructor(public data: {
-                    id: number;
-                    date: number;
-                    contact: string;
-                    companyType: number;
-                    licensePlate: string;
-                    workTime: number;
-                    description: string;
-                    workPrice: number;
-                    partsPrice: number;
-                    partsCost: number;
-                    paidSum: number;
-                    paid: boolean;
-                    paymentInstrument: string;
-                    notes: string;
-                }
+    constructor(data: WorkCardDTO
     ) {
         this.id = data.id;
         this.date = data.date;
@@ -37,6 +26,8 @@ export default class WorkCard {
         this.companyType = data.companyType;
         this.licensePlate = data.licensePlate;
         this.workTime = data.workTime;
+        this.startTime = data.startWorkTime;
+        this.endTime = data.endWorkTime;
         this.description = data.description;
         this.workPrice = data.workPrice;
         this.partsPrice = data.partsPrice;
@@ -50,7 +41,7 @@ export default class WorkCard {
     get dateString() {
         const tempDate = new Date(this.date);
 
-        if (tempDate){
+        if (tempDate) {
             return tempDate.toLocaleDateString();
         }
 
@@ -60,5 +51,67 @@ export default class WorkCard {
     set dateString(timestamp: string) {
         this.date = parseInt(timestamp);
     }
-}
 
+    get paymentInst() {
+        switch (this.paymentInstrument) {
+
+            case "CREDIT_CARD":
+                return {
+                    value: "CREDIT_CARD",
+                    text: "אשראי"
+                };
+            case "REMITTANCE":
+                return {
+                    value: "REMITTANCE",
+                    text: "העברה"
+                };
+            case "CHECK":
+                return {
+                    value: "CHECK",
+                    text: "צ'ק"
+                };
+            case "CASH":
+            default:
+                return {
+                    value: "CASH",
+                    text: "מזומן"
+                };
+        }
+    }
+
+    set paymentInst(value) {
+        this.paymentInstrument = String(value);
+    }
+
+    private static processWorkTime(workTime: number | string) {
+        console.log('processWorkTime', workTime, workTime.toString().indexOf("-") > -1);
+        if (workTime.toString().indexOf("-") > -1) {
+            const [startTime, endTime] = workTime.toString().split("-");
+
+            const start = startTime.split(":");
+            const end = endTime.split(":");
+            const startDate = new Date(0, 0, 0, parseInt(start[0]), parseInt(start[1]), 0);
+            const endDate = new Date(0, 0, 0, parseInt(end[0]), parseInt(end[1]), 0);
+            let diff = endDate.getTime() - startDate.getTime();
+            let hours = Math.floor(diff / 1000 / 60 / 60);
+            diff -= hours * 1000 * 60 * 60;
+            const minutes = Math.floor(diff / 1000 / 60);
+
+            // If using time pickers with 24 hours format, add the below line get exact hours
+            if (hours < 0)
+                hours = hours + 24;
+
+            return {
+                start: startTime,
+                end: endTime,
+                diff: hours + (minutes / 60)
+            }
+        }
+
+        return {
+            start: null,
+            end: null,
+            diff: parseInt(workTime + "")
+        };
+    }
+}

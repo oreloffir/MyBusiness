@@ -17,7 +17,7 @@
                 <v-card-text>
                     <v-container>
                         <v-row>
-                            <v-col cols="12" sm="6" md="4">
+                            <v-col cols="12" lg="12">
                                 <v-menu
                                         v-model="dateMenu"
                                         :close-on-content-click="false"
@@ -49,16 +49,15 @@
                                 ></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
-                                <v-select label="חברה"
+                                <v-autocomplete label="חברה"
                                           :items="['פרטי','יזמות','צבע ארגמן']"
                                           v-model="workCard.companyType"
                                           :input="workCard.companyType"
-                                          persistent-hint
-                                          required
-                                ></v-select>
+                                ></v-autocomplete>
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
                                 <v-text-field label="* לוחית רישוי"
+                                              placeholder="XX-XXX-XX"
                                               v-model="workCard.licensePlate"
                                               required
                                 ></v-text-field>
@@ -68,6 +67,64 @@
                                               type="number"
                                               v-model="workCard.workTime"
                                 ></v-text-field>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                                <v-menu
+                                        ref="startTimeMenu"
+                                        v-model="startTimeMenu"
+                                        :close-on-content-click="false"
+                                        :return-value.sync="workCard.startTime"
+                                        transition="scale-transition"
+                                        max-width="290px"
+                                        min-width="290px"
+                                >
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-text-field
+                                                v-model="workCard.startTime"
+                                                label="שעת התחלה"
+                                                prepend-icon="mdi-clock-time-four-outline"
+                                                readonly
+                                                v-bind="attrs"
+                                                v-on="on"
+                                        ></v-text-field>
+                                    </template>
+                                    <v-time-picker
+                                            v-if="startTimeMenu"
+                                            v-model="startTime"
+                                            format="24hr"
+                                            full-width
+                                            @click:minute="$refs.startTimeMenu.save(startTime)"
+                                    ></v-time-picker>
+                                </v-menu>
+                            </v-col>
+                            <v-col cols="12" sm="6" md="4">
+                                <v-menu
+                                        ref="endTimeMenu"
+                                        v-model="endTimeMenu"
+                                        :close-on-content-click="false"
+                                        :return-value.sync="workCard.endTime"
+                                        transition="scale-transition"
+                                        max-width="290px"
+                                        min-width="290px"
+                                >
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-text-field
+                                                v-model="workCard.endTime"
+                                                label="שעת התחלה"
+                                                prepend-icon="mdi-clock-time-four-outline"
+                                                readonly
+                                                v-bind="attrs"
+                                                v-on="on"
+                                        ></v-text-field>
+                                    </template>
+                                    <v-time-picker
+                                            v-if="endTimeMenu"
+                                            v-model="endTime"
+                                            format="24hr"
+                                            full-width
+                                            @click:minute="$refs.endTimeMenu.save(endTime)"
+                                    ></v-time-picker>
+                                </v-menu>
                             </v-col>
                             <v-col cols="12" sm="12" md="12">
                                 <v-text-field label="תיאור"
@@ -112,8 +169,8 @@
                             <v-col cols="12" sm="6">
                                 <v-autocomplete label="אמצעי תשלום"
                                                 single
-                                                v-model="workCard.paymentInstrument"
-                                                :items="['מזומן', 'צק', 'העברה', 'אשראי']"
+                                                v-model="workCard.paymentInst"
+                                                :items="paymentSelectItems"
                                 ></v-autocomplete>
                             </v-col>
                             <v-col cols="12">
@@ -158,7 +215,27 @@
         },
         data() {
             return {
-                dateMenu: false,
+                dateMenu : false,
+                startTimeMenu : false,
+                endTimeMenu : false,
+                paymentSelectItems : [
+                    {
+                        value : "CHECK",
+                        text : "צ'ק"
+                    },
+                    {
+                        value : "CASH",
+                        text : "מזומן"
+                    },
+                    {
+                        value : "CREDIT_CARD",
+                        text : "כרטיס אשראי"
+                    },
+                    {
+                        value : "REMITTANCE",
+                        text : "העברה בנקאית"
+                    }
+                ]
             }
         },
         computed : {
@@ -175,15 +252,28 @@
             },
             date : {
                 get() {
-                    const date = new Date(this.workCard.date).toISOString().substr(0, 10);
-                    console.log('get', date);
-
-                    return date;
+                    return new Date(this.workCard.date).toISOString().substr(0, 10);
                 },
                 set(value) {
                     this.workCard.date = Date.parse(value);
                 }
             },
+            startTime : {
+                get() {
+                    return this.workCard.startTime;
+                },
+                set(value) {
+                    this.workCard.startTime = value;
+                }
+            },
+            endTime : {
+                get() {
+                    return this.workCard.endTime;
+                },
+                set(value) {
+                    this.workCard.endTime = value;
+                }
+            }
         },
         methods : {
             ...mapActions({

@@ -1,7 +1,8 @@
 import Vue from "vue";
 import axios from 'axios';
-import worksData from "../../works.json";
+// import worksData from "../../works.json";
 import WorkCard from "../../../utils/workCard/WorkCard";
+import WorkCardDTO from "@/utils/workCard/WorkCardDTO";
 import DBConnector from "../../../utils/DBConnector/DBConnector";
 
 interface VuexStateInterface {
@@ -46,8 +47,10 @@ const getters = {
             date: Date.now(),
             contact: '',
             companyType: 1,
-            licensePlate: 'XX-XXX-XX',
+            licensePlate: '',
             workTime: 0,
+            startWorkTime: '',
+            endWorkTime: '',
             description: '',
             workPrice: 0,
             partsPrice: 0,
@@ -63,11 +66,12 @@ const getters = {
 // The module actions.state
 const actions = {
     initialize({dispatch}: VuexInterface) {
-        axios.get('https://mybusiness-49812.firebaseio.com/works.json?limit=10')
+        axios.get('https://mybusiness-49812.firebaseio.com/works.json')
             .then(res => {
-                return res.data.forEach((workData: WorkCard) => {
-                    if (workData)
-                        dispatch('updateWork', workData)
+                return res.data.forEach((workData: WorkCardDTO) => {
+                    if (workData) {
+                        dispatch('updateWork', new WorkCard(workData));
+                    }
                 });
             });
 
@@ -83,12 +87,11 @@ const actions = {
             commit('resetModalWorkCard', getters.emptyWorkCard);
         }
     },
-    updateWork({state, commit, getters}: VuexInterface, workData: WorkCard) {
+    updateWork({state, commit, getters}: VuexInterface, workData: WorkCardDTO) {
         const existingWorkCard = state.worksData.filter((workCard: WorkCard) => {
             return workCard.id === workData.id;
         }).pop();
 
-        delete workData.data;
         DBConnector.worksCollection.child(String(workData.id)).update(workData);
 
         if (existingWorkCard) {
@@ -100,10 +103,10 @@ const actions = {
         commit('resetModalWorkCard', getters.emptyWorkCard);
 
     },
-    editWork({state, commit}: VuexInterface, workData: WorkCard) {
-        const existingWorkCard = new WorkCard(workData);
+    editWork({commit}: VuexInterface, workData: WorkCard) {
+        // const existingWorkCard = workData;
 
-        commit('setModalWorkCard', existingWorkCard);
+        commit('setModalWorkCard', workData);
     },
     deleteWork({commit}: VuexInterface, workData: WorkCard) {
         const existingWorkCard = state.worksData.filter((workCard: WorkCard) => {
@@ -143,7 +146,7 @@ const mutations = {
         state.worksData.splice(existingWorkCardIndex, 1);
     },
     addWork(state: VuexStateInterface, workData: WorkCard) {
-        state.worksData.push(new WorkCard(workData));
+        state.worksData.push(workData);
     },
     updateWork(state: VuexStateInterface, workData: WorkCard) {
         const existingWorkCardIndex = state.worksData.findIndex((workCard: WorkCard) => {

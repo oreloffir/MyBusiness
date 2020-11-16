@@ -20,6 +20,9 @@
             <template v-slot:item.date="{ item }">
                 <span>{{ dateString(item) }}</span>
             </template>
+            <template v-slot:item.paymentInstrument="{ item }">
+                <span>{{ paymentLabel(item) }}</span>
+            </template>
             <template v-slot:item.actions="{ item }">
                 <v-icon @click="edit(item)">mdi-briefcase-edit</v-icon>
                 <v-icon @click="deleteWork(item)">mdi-delete-circle</v-icon>
@@ -80,7 +83,7 @@
                     },
                     { text : 'לקוח', value : 'companyType' },
                     { text : 'לוחית רישוי', value : 'licensePlate', width : 95 },
-                    { text : 'זמן עבודה', value : 'workTime' },
+                    { text : 'שעות עבודה', value : 'workTime' },
                     { text : 'תיאור עבודה', value : 'description', width : 350, height : 100 },
                     { text : 'מחיר עבודה', value : 'workPrice' },
                     { text : 'מחיר חלקים', value : 'partsPrice' },
@@ -104,11 +107,11 @@
                 this.editWork(workCard);
                 this.$emit('openModal');
             },
-            searchFilter(value, search, item) {
+            searchFilter(value, search) {
                 return value != null && search != null &&
                     value.toString().toLowerCase().indexOf(search.toLowerCase()) !== -1
             },
-            filterOnlyCapsText(value, search, item) {
+            filterOnlyCapsText(value, search) {
                 return value != null &&
                     search != null &&
                     typeof value === 'string' &&
@@ -116,6 +119,9 @@
             },
             dateString(item) {
                 return new WorkCard(item).dateString;
+            },
+            paymentLabel(item) {
+                return new WorkCard(item).paymentInst.text;
             }
         }
     }
