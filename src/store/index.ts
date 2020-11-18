@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Works from '../store/modules/works/Index'
+import Works from './modules/works/work.store'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: {
-    works: Works
-  }
+    state: {},
+    modules: {
+        works: Works
+    }
 })

@@ -1,7 +1,7 @@
 <template>
     <div class="works">
         <works-modal v-model="showModal"></works-modal>
-        <works-table :works="worksData" @openModal="openModal"></works-table>
+        <works-table v-if="worksData" :works="worksData" @openModal="openModal"></works-table>
     </div>
 </template>
 
