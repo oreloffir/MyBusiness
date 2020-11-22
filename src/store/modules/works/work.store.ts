@@ -4,6 +4,7 @@ import axios from 'axios';
 import WorkCard from "../../../utils/workCard/WorkCard";
 import WorkCardDTO from "@/utils/workCard/WorkCardDTO";
 import DBConnector from "../../../utils/DBConnector/DBConnector";
+import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 // import worksData from "../../works.json";
 Vue.use(Vuex);
 
@@ -147,22 +148,10 @@ Vue.use(Vuex);
 //     }
 // });
 
-
-import {VuexModule, Module, Mutation, Action} from 'vuex-module-decorators'
-
 @Module({namespaced: true})
 class Works extends VuexModule {
-    public worksData = Array<WorkCard>();
-    private  _modalWorkCard: WorkCard | undefined;
-
-
-    get modalWorkCard() {
-        if (!this._modalWorkCard) {
-            this._modalWorkCard = {...this.context.getters['emptyWorkCard'], dateString: '', paymentInst: {value:'CASH' , text: 'CASH'}}
-        }
-
-        return this._modalWorkCard;
-    }
+    public worksData: Array<WorkCard> = [];
+    public _modalWorkCard?: WorkCard;
 
     get emptyWorkCard() {
         const lastId = this.worksData.length ? this.worksData[this.worksData.length - 1].id : null;
@@ -233,8 +222,6 @@ class Works extends VuexModule {
 
     @Action
     editWork(workData: WorkCard) {
-        // const existingWorkCard = workData;
-
         this.context.commit('setModalWorkCard', workData);
     }
 
@@ -258,7 +245,7 @@ class Works extends VuexModule {
 
     @Mutation
     setModalWorkCard(workData: WorkCard) {
-        this._modalWorkCard = workData;
+        Vue.set(this, '_modalWorkCard', workData);
     }
 
     @Mutation

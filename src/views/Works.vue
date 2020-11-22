@@ -1,13 +1,13 @@
 <template>
     <div class="works">
-        <works-modal v-model="showModal"></works-modal>
+        <works-modal v-if="showModal" v-model="showModal"></works-modal>
         <works-table v-if="worksData" :works="worksData" @openModal="openModal"></works-table>
     </div>
 </template>
 
 <script>
-    import {mapState, mapActions} from 'vuex';
-    import WorksTable from '../components/works/table';
+    import {mapActions, mapState} from 'vuex';
+    import WorksTable from '../components/works/table/Index';
     import WorksModal from '../components/works/modal';
 
     export default {

@@ -50,9 +50,9 @@
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
                                 <v-autocomplete label="חברה"
-                                          :items="['פרטי','יזמות','צבע ארגמן']"
-                                          v-model="workCard.companyType"
-                                          :input="workCard.companyType"
+                                                :input="workCard.companyType"
+                                                :items="['פרטי','יזמות','צבע ארגמן']"
+                                                v-model="workCard.companyType"
                                 ></v-autocomplete>
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
@@ -144,14 +144,14 @@
                             <v-col cols="12" sm="6" md="4">
                                 <v-text-field label="* מחיר חלקים"
                                               type="number"
-                                              v-model="workCard.partsCost"
+                                              v-model="workCard.partsPrice"
                                 ></v-text-field>
                             </v-col>
                             <v-col cols="12" sm="6" md="4">
                                 <v-text-field label="הוצאות"
                                               type="number"
                                               hint="עלות החלקים כולל מע''מ"
-                                              v-model="workCard.partsPrice"
+                                              v-model="workCard.partsCost"
                                               persistent-hint
                                               required
                                 ></v-text-field>
@@ -203,7 +203,7 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex';
+    import {mapActions, mapGetters, mapState} from 'vuex';
 
     export default {
         name : "modal",
@@ -239,8 +239,11 @@
             }
         },
         computed : {
+            ...mapState({
+                workCard : state => state.works._modalWorkCard,
+            }),
             ...mapGetters({
-                workCard : 'works/modalWorkCard'
+                // workCard : 'works/modalWorkCard'
             }),
             show : {
                 get() {
@@ -273,6 +276,12 @@
                 set(value) {
                     this.workCard.endTime = value;
                 }
+            }
+        },
+        watch : {
+            workCard(newVal, oldVal) {
+                console.log(newVal);
+                console.log(oldVal);
             }
         },
         methods : {
