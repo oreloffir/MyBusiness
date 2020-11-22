@@ -227,6 +227,7 @@ class Works extends VuexModule {
 
     @Action
     deleteWork(workData: WorkCard) {
+        console.log('hereeeee', workData);
         const existingWorkCard = this.worksData.filter((workCard: WorkCard) => {
             return workCard.id === workData.id;
         }).pop();

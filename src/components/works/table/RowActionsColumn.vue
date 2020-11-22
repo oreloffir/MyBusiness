@@ -1,7 +1,7 @@
 <template>
     <div class="rowActionsWrapper">
         <v-icon @click="edit">mdi-briefcase-edit</v-icon>
-        <v-icon @click="deleteWork">mdi-delete-circle</v-icon>
+        <v-icon @click="deleteWork(workCard)">mdi-delete-circle</v-icon>
     </div>
 </template>
 

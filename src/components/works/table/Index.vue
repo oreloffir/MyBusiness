@@ -21,7 +21,6 @@
             <template v-slot:item.actions="{ item }">
                 <table-row-actions-column :workCard="item" @openModal="edit"/>
             </template>
-
         </v-data-table>
     </div>
 </template>
