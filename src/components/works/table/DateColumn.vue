@@ -8,14 +8,14 @@
 
     @Component
     export default class TableDateColumn extends Vue {
-        @Prop() readonly workCard: WorkCard;
+        @Prop({required: true}) readonly workCard: WorkCard;
 
         constructor() {
             super();
         }
 
         get dateString(): string {
-            return this.workCard.dateString
+            return this.workCard.dateString;
         }
     }
 </script>

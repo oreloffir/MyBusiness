@@ -11,7 +11,7 @@
 
     @Component
     export default class TableTop extends Vue {
-        @Prop({default: ''}) search: string;
+        @Prop({default: ''}) search?: string;
         private model = '';
 
         constructor() {
@@ -19,7 +19,7 @@
         }
 
         @Watch('model')
-        updateModel(value) {
+        updateModel(value: string) {
             this.model = value;
             this.$emit('search', value);
         }

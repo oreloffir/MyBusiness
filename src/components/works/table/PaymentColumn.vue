@@ -8,7 +8,7 @@
 
     @Component
     export default class TablePaymentColumn extends Vue {
-        @Prop() readonly workCard: WorkCard;
+        @Prop({required: true}) readonly workCard: WorkCard;
 
         constructor() {
             super();

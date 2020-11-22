@@ -50,7 +50,7 @@
 
     @Component
     export default class TableRowActionsColumn extends Vue {
-        @Prop() readonly workCard: WorkCard;
+        @Prop({required: true}) readonly workCard: WorkCard;
         removeDialog: boolean;
 
         constructor() {
