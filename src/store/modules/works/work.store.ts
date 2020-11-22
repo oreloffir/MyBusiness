@@ -8,150 +8,10 @@ import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 // import worksData from "../../works.json";
 Vue.use(Vuex);
 
-// Export module.
-// export default new Vuex.Store({
-//     // The module state.
-//     state: {
-//         worksData: Array<WorkCard>(),
-//         modalWorkCard: null,
-//     },
-//     // The module getters.
-//     getters: {
-//         modalWorkCard(state, getters) {
-//             // return () => {
-//             if (!state.modalWorkCard) {
-//                 return {...getters.emptyWorkCard}
-//             }
-//
-//             return state.modalWorkCard;
-//             // }
-//         },
-//         emptyWorkCard(state) {
-//             // return () => {
-//             const lastId = state.worksData.length ? state.worksData[state.worksData.length - 1].id : null;
-//             return new WorkCard({
-//                 id: lastId ? lastId + 1 : 1,
-//                 date: Date.now(),
-//                 contact: '',
-//                 companyType: 1,
-//                 licensePlate: '',
-//                 workTime: 0,
-//                 startWorkTime: '',
-//                 endWorkTime: '',
-//                 description: '',
-//                 workPrice: 0,
-//                 partsPrice: 0,
-//                 partsCost: 0,
-//                 paidSum: 0,
-//                 paid: false,
-//                 paymentInstrument: '',
-//                 notes: ''
-//             });
-//             // };
-//         }
-//     },
-//     // The module actions
-//     actions: {
-//         initialize({dispatch}) {
-//             axios.get('https://mybusiness-49812.firebaseio.com/works.json')
-//                 .then(res => {
-//                     return res.data.forEach((workData: WorkCardDTO) => {
-//                         if (workData) {
-//                             dispatch('updateWork', new WorkCard(workData));
-//                         }
-//                     });
-//                 });
-//
-//             // worksData.data.forEach(workData => {
-//             //     const [day, month, year] = workData.date.split('/');
-//             //     workData.date = Date.parse(`${month}/${day}/${year}`);
-//             //
-//             //     dispatch('updateWork', new WorkCard(workData))
-//             // })
-//         },
-//         newWork({state, commit, getters}) {
-//             if (state.modalWorkCard) {
-//                 commit('resetModalWorkCard', getters.emptyWorkCard);
-//             }
-//         },
-//         updateWork({state, commit, getters}, workData: WorkCardDTO) {
-//             const existingWorkCard = state.worksData.filter((workCard: WorkCard) => {
-//                 return workCard.id === workData.id;
-//             }).pop();
-//
-//             DBConnector.worksCollection.child(String(workData.id)).update(workData);
-//
-//             if (existingWorkCard) {
-//                 commit('updateWork', workData);
-//             } else {
-//                 commit('addWork', workData)
-//             }
-//
-//             commit('resetModalWorkCard', getters.emptyWorkCard);
-//
-//         },
-//         editWork({commit}, workData: WorkCard) {
-//             // const existingWorkCard = workData;
-//
-//             commit('setModalWorkCard', workData);
-//         },
-//         deleteWork({commit, state}, workData: WorkCard) {
-//             const existingWorkCard = state.worksData.filter((workCard: WorkCard) => {
-//                 return workCard.id === workData.id;
-//             }).pop();
-//
-//             if (existingWorkCard) {
-//                 DBConnector.worksCollection.child(String(existingWorkCard.id)).remove();
-//
-//                 commit('deleteWork', existingWorkCard);
-//             }
-//         }
-//     },
-//     // The module mutations
-//     mutations: {
-//         /**
-//          * Set all the section from server to store.
-//          *
-//          * @param state
-//          * @param works
-//          */
-//         setWorks(state, works: WorkCard) {
-//             Vue.set(state, 'worksData', works);
-//         },
-//         setModalWorkCard(state, workData: WorkCard) {
-//             Vue.set(state, 'modalWorkCard', workData);
-//         },
-//         resetModalWorkCard(state, workData: WorkCard) {
-//             Vue.set(state, 'modalWorkCard', workData);
-//         },
-//         deleteWork(state, workData: WorkCard) {
-//             const existingWorkCardIndex = state.worksData.findIndex((workCard: WorkCard) => {
-//                 return workCard.id === workData.id;
-//             });
-//
-//             state.worksData.splice(existingWorkCardIndex, 1);
-//         },
-//         addWork(state, workData: WorkCard) {
-//             state.worksData.push(workData);
-//         },
-//         updateWork(state, workData: WorkCard) {
-//             const existingWorkCardIndex = state.worksData.findIndex((workCard: WorkCard) => {
-//                 return workCard.id === workData.id;
-//             });
-//
-//             if (existingWorkCardIndex >= 0) {
-//                 Vue.set(state.worksData, existingWorkCardIndex, workData);
-//             } else {
-//                 state.worksData.push(workData);
-//             }
-//         }
-//     }
-// });
-
 @Module({namespaced: true})
 class Works extends VuexModule {
     public worksData: Array<WorkCard> = [];
-    public _modalWorkCard?: WorkCard;
+    public modalWorkCard?: WorkCard;
 
     get emptyWorkCard() {
         const lastId = this.worksData.length ? this.worksData[this.worksData.length - 1].id : null;
@@ -180,11 +40,15 @@ class Works extends VuexModule {
     initialize() {
         axios.get('https://mybusiness-49812.firebaseio.com/works.json')
             .then(res => {
-                return res.data.forEach((workData: WorkCardDTO) => {
+                const worksData = Array<WorkCard>();
+
+                res.data.forEach((workData: WorkCardDTO) => {
                     if (workData) {
-                        this.context.dispatch('updateWork', new WorkCard(workData));
+                        worksData.push(new WorkCard(workData));
                     }
                 });
+
+                return this.context.commit('setWorks', worksData);
             });
 
         // worksData.data.forEach(workData => {
@@ -197,7 +61,7 @@ class Works extends VuexModule {
 
     @Action
     newWork() {
-        if (this._modalWorkCard) {
+        if (this.modalWorkCard) {
             this.context.commit('resetModalWorkCard', this.context.getters['emptyWorkCard']);
         }
     }
@@ -227,7 +91,6 @@ class Works extends VuexModule {
 
     @Action
     deleteWork(workData: WorkCard) {
-        console.log('hereeeee', workData);
         const existingWorkCard = this.worksData.filter((workCard: WorkCard) => {
             return workCard.id === workData.id;
         }).pop();
@@ -246,12 +109,12 @@ class Works extends VuexModule {
 
     @Mutation
     setModalWorkCard(workData: WorkCard) {
-        Vue.set(this, '_modalWorkCard', workData);
+        Vue.set(this, 'modalWorkCard', workData);
     }
 
     @Mutation
     resetModalWorkCard(workData: WorkCard) {
-        this._modalWorkCard = workData;
+        this.modalWorkCard = workData;
     }
 
     @Mutation

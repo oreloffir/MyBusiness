@@ -1,6 +1,6 @@
 <template>
     <div class="works">
-        <works-modal v-if="showModal" v-model="showModal"></works-modal>
+        <works-modal v-model="showModal"></works-modal>
         <works-table v-if="worksData" :works="worksData" @openModal="openModal"></works-table>
     </div>
 </template>

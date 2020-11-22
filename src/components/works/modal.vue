@@ -240,11 +240,17 @@
         },
         computed : {
             ...mapState({
-                workCard : state => state.works._modalWorkCard,
+                modalWorkCard : state => state.works.modalWorkCard,
             }),
             ...mapGetters({
-                // workCard : 'works/modalWorkCard'
+                emptyWorkCard : 'works/emptyWorkCard'
             }),
+            workCard() {
+                if (this.modalWorkCard)
+                    return this.modalWorkCard;
+
+                return this.emptyWorkCard
+            },
             show : {
                 get() {
                     return this.value
@@ -255,7 +261,10 @@
             },
             date : {
                 get() {
-                    return new Date(this.workCard.date).toISOString().substr(0, 10);
+                    if (this.workCard && this.workCard.date)
+                        return new Date(this.workCard.date).toISOString().substr(0, 10);
+
+                    return new Date().toISOString().substr(0, 10);
                 },
                 set(value) {
                     this.workCard.date = Date.parse(value);
@@ -263,7 +272,9 @@
             },
             startTime : {
                 get() {
-                    return this.workCard.startTime;
+                    if (this.workCard && this.workCard.startTime)
+                        return this.workCard.startTime;
+                    return '';
                 },
                 set(value) {
                     this.workCard.startTime = value;
@@ -271,17 +282,13 @@
             },
             endTime : {
                 get() {
-                    return this.workCard.endTime;
+                    if (this.workCard && this.workCard.endTime)
+                        return this.workCard.endTime;
+                    return ''
                 },
                 set(value) {
                     this.workCard.endTime = value;
                 }
-            }
-        },
-        watch : {
-            workCard(newVal, oldVal) {
-                console.log(newVal);
-                console.log(oldVal);
             }
         },
         methods : {
