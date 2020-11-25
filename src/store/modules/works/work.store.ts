@@ -1,8 +1,8 @@
 import Vue from "vue";
-import Vuex from 'vuex';
 import axios from 'axios';
-import WorkCard from "../../../utils/workCard/WorkCard";
+import Vuex, {Module as Mod} from 'vuex';
 import WorkCardDTO from "@/utils/workCard/WorkCardDTO";
+import WorkCard from "../../../utils/workCard/WorkCard";
 import DBConnector from "../../../utils/DBConnector/DBConnector";
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 // import worksData from "../../works.json";
@@ -13,26 +13,19 @@ class Works extends VuexModule {
     public worksData: Array<WorkCard> = [];
     public modalWorkCard?: WorkCard;
 
+    // eslint-disable-next-line
+    constructor(module: Mod<{}, any>) {
+        super(module);
+        this.modalWorkCard = this.emptyWorkCard;
+        this.worksData.push(this.modalWorkCard)
+    }
+
     get emptyWorkCard() {
         const lastId = this.worksData.length ? this.worksData[this.worksData.length - 1].id : null;
 
         return new WorkCard({
             id: lastId ? lastId + 1 : 1,
-            date: Date.now(),
-            contact: '',
-            companyType: 1,
-            licensePlate: '',
-            workTime: 0,
-            startWorkTime: '',
-            endWorkTime: '',
-            description: '',
-            workPrice: 0,
-            partsPrice: 0,
-            partsCost: 0,
-            paidSum: 0,
-            paid: false,
-            paymentInstrument: '',
-            notes: ''
+            date: Date.now()
         });
     }
 
@@ -67,12 +60,12 @@ class Works extends VuexModule {
     }
 
     @Action
-    updateWork(workData: WorkCardDTO) {
+    updateWork(workData: WorkCard) {
         const existingWorkCard = this.worksData.filter((workCard: WorkCard) => {
             return workCard.id === workData.id;
         }).pop();
 
-        DBConnector.worksCollection.child(String(workData.id)).update(workData);
+        DBConnector.worksCollection.child(String(workData.id)).update(workData.firebaseObject);
 
         if (existingWorkCard) {
             this.context.commit('setUpdateWork', workData);
@@ -81,7 +74,6 @@ class Works extends VuexModule {
         }
 
         this.context.commit('resetModalWorkCard', this.context.getters['emptyWorkCard']);
-
     }
 
     @Action

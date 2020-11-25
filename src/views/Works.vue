@@ -8,7 +8,7 @@
 <script>
     import {mapActions, mapState} from 'vuex';
     import WorksTable from '../components/works/table/Index';
-    import WorksModal from '../components/works/modal';
+    import WorksModal from '../components/works/modal/Index';
 
     export default {
         data() {

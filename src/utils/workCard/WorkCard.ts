@@ -3,20 +3,20 @@ import WorkCardDTO from './WorkCardDTO';
 export default class WorkCard {
     public id: number;
     public date: number;
-    public contact: string;
-    public companyType: number;
-    public licensePlate: string;
-    public workTime: number;
-    public startTime: string;
-    public endTime: string;
-    public description: string;
-    public workPrice: number;
-    public partsPrice: number;
-    public partsCost: number;
-    public paidSum: number;
-    public paid: boolean;
-    public paymentInstrument: string;
-    public notes: string;
+    public contact?: string;
+    public companyType?: number;
+    public licensePlate?: string;
+    public workTime?: number;
+    public startWorkTime?: string;
+    public endWorkTime?: string;
+    public description?: string;
+    public workPrice?: number;
+    public partsPrice?: number;
+    public partsCost?: number;
+    public paidSum?: number;
+    public paid?: boolean;
+    public paymentInstrument?: string;
+    public notes?: string;
 
     constructor(data: WorkCardDTO
     ) {
@@ -26,8 +26,8 @@ export default class WorkCard {
         this.companyType = data.companyType;
         this.licensePlate = data.licensePlate;
         this.workTime = data.workTime;
-        this.startTime = data.startWorkTime;
-        this.endTime = data.endWorkTime;
+        this.startWorkTime = data.startWorkTime;
+        this.endWorkTime = data.endWorkTime;
         this.description = data.description;
         this.workPrice = data.workPrice;
         this.partsPrice = data.partsPrice;
@@ -83,35 +83,24 @@ export default class WorkCard {
         this.paymentInstrument = String(value);
     }
 
-    private static processWorkTime(workTime: number | string) {
-        console.log('processWorkTime', workTime, workTime.toString().indexOf("-") > -1);
-        if (workTime.toString().indexOf("-") > -1) {
-            const [startTime, endTime] = workTime.toString().split("-");
-
-            const start = startTime.split(":");
-            const end = endTime.split(":");
-            const startDate = new Date(0, 0, 0, parseInt(start[0]), parseInt(start[1]), 0);
-            const endDate = new Date(0, 0, 0, parseInt(end[0]), parseInt(end[1]), 0);
-            let diff = endDate.getTime() - startDate.getTime();
-            let hours = Math.floor(diff / 1000 / 60 / 60);
-            diff -= hours * 1000 * 60 * 60;
-            const minutes = Math.floor(diff / 1000 / 60);
-
-            // If using time pickers with 24 hours format, add the below line get exact hours
-            if (hours < 0)
-                hours = hours + 24;
-
-            return {
-                start: startTime,
-                end: endTime,
-                diff: hours + (minutes / 60)
-            }
-        }
-
+    get firebaseObject() {
         return {
-            start: null,
-            end: null,
-            diff: parseInt(workTime + "")
+            id: this.id ? this.id : null,
+            date: this.date ? this.date : null,
+            contact: this.contact ? this.contact : null,
+            companyType: this.companyType ? this.companyType : null,
+            licensePlate: this.licensePlate ? this.licensePlate : null,
+            workTime: this.workTime ? this.workTime : null,
+            startWorkTime: this.startWorkTime ? this.startWorkTime : null,
+            endWorkTime: this.endWorkTime ? this.endWorkTime : null,
+            description: this.description ? this.description : null,
+            workPrice: this.workPrice ? this.workPrice : null,
+            partsPrice: this.partsPrice ? this.partsPrice : null,
+            partsCost: this.partsCost ? this.partsCost : null,
+            paidSum: this.paidSum ? this.paidSum : null,
+            paid: this.paid ? this.paid : null,
+            paymentInstrument: this.paymentInstrument ? this.paymentInstrument : null,
+            notes: this.notes ? this.notes : null,
         };
     }
 }
