@@ -60,7 +60,6 @@
 
         edit() {
             this.editWork(this.workCard);
-            this.$emit('openModal');
         }
 
         remove() {

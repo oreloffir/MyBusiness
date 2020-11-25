@@ -1,21 +1,25 @@
 import Vue from "vue";
 import axios from 'axios';
 import Vuex, {Module as Mod} from 'vuex';
+import WorkCard from "@/utils/workCard/WorkCard";
 import WorkCardDTO from "@/utils/workCard/WorkCardDTO";
-import WorkCard from "../../../utils/workCard/WorkCard";
-import DBConnector from "../../../utils/DBConnector/DBConnector";
+import WorksTable from "@/utils/worksTable/WorksTable";
+import DBConnector from "@/utils/DBConnector/DBConnector";
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 // import worksData from "../../works.json";
 Vue.use(Vuex);
 
 @Module({namespaced: true})
 class Works extends VuexModule {
-    public worksData: Array<WorkCard> = [];
+    public showModal: boolean;
     public modalWorkCard?: WorkCard;
+    public worksTable?: WorksTable;
+    public worksData: Array<WorkCard> = [];
 
     // eslint-disable-next-line
     constructor(module: Mod<{}, any>) {
         super(module);
+        this.showModal = false;
         this.modalWorkCard = this.emptyWorkCard;
         this.worksData.push(this.modalWorkCard)
     }
@@ -65,15 +69,16 @@ class Works extends VuexModule {
             return workCard.id === workData.id;
         }).pop();
 
-        DBConnector.worksCollection.child(String(workData.id)).update(workData.firebaseObject);
+        DBConnector.worksCollection.child(String(workData.id)).update(workData.firebaseObject).then(res => {
+            if (existingWorkCard) {
+                this.context.commit('setUpdateWork', workData);
+            } else {
+                this.context.commit('addWork', workData);
+            }
 
-        if (existingWorkCard) {
-            this.context.commit('setUpdateWork', workData);
-        } else {
-            this.context.commit('addWork', workData)
-        }
-
-        this.context.commit('resetModalWorkCard', this.context.getters['emptyWorkCard']);
+            this.context.commit('setShowModal', false);
+            this.context.commit('resetModalWorkCard', this.context.getters['emptyWorkCard']);
+        }).catch(err => alert("שגיאה בזמן שמירה\n" + err));
     }
 
     @Action
@@ -88,19 +93,31 @@ class Works extends VuexModule {
         }).pop();
 
         if (existingWorkCard) {
-            DBConnector.worksCollection.child(String(existingWorkCard.id)).remove();
-
-            this.context.commit('setDeleteWork', existingWorkCard);
+            DBConnector.worksCollection.child(String(existingWorkCard.id)).remove().then(res => {
+                this.context.commit('setDeleteWork', existingWorkCard);
+            }).catch(err => alert("שגיאה בזמן מחיקה\n" + err));
         }
+    }
+
+    @Action
+    updateModal(flag: boolean) {
+        this.context.commit('setShowModal', flag);
+    }
+
+    @Mutation
+    setShowModal(flag: boolean) {
+        Vue.set(this, 'showModal', flag);
     }
 
     @Mutation
     setWorks(works: WorkCard[]) {
-        this.worksData = works;
+        Vue.set(this, 'worksData', works);
+        Vue.set(this, 'worksTable', new WorksTable(works));
     }
 
     @Mutation
     setModalWorkCard(workData: WorkCard) {
+        Vue.set(this, 'showModal', true);
         Vue.set(this, 'modalWorkCard', workData);
     }
 

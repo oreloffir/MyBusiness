@@ -1,7 +1,7 @@
 <template>
     <div class="works">
         <works-modal v-model="showModal"></works-modal>
-        <works-table v-if="worksData" :works="worksData" @openModal="openModal"></works-table>
+        <works-table :table="worksTable"></works-table>
     </div>
 </template>
 
@@ -11,27 +11,24 @@
     import WorksModal from '../components/works/modal/Index';
 
     export default {
-        data() {
-            return {
-                showModal : false,
-            }
-        },
         components : {
             WorksTable,
             WorksModal
         },
         computed : {
             ...mapState({
-                worksData : state => state.works.worksData
+                worksData : state => state.works.worksData,
+                worksTable : state => state.works.worksTable,
+                showWorkModal : state => state.works.showModal,
             }),
+            showModal() {
+                return this.showWorkModal;
+            },
         },
         methods : {
             ...mapActions({
                 init : 'works/initialize'
-            }),
-            openModal(){
-                this.showModal = true;
-            }
+            })
         },
         created(){
             this.init();

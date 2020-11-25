@@ -1,16 +1,16 @@
 <template>
-    <div class="worksTableContainer">
+    <div class="worksTableContainer" ref="worksTableContainer">
         <v-data-table
                 item-key="id"
                 :items="works"
                 :headers="headers"
                 :search="search"
-                :custom-filter="searchFilter"
                 :fixed-header="true"
                 :height="tableHeight"
+                :footer-props="{'items-per-page-options': [-1, 10, 50, 250, 500]}"
         >
             <template v-slot:top>
-                <table-top :search="search" @search="searchUpdate"/>
+                <table-top/>
             </template>
             <template v-slot:item.date="{ item }">
                 <table-date-column :workCard="item"/>
@@ -19,7 +19,7 @@
                 <table-payment-column :workCard="item"/>
             </template>
             <template v-slot:item.actions="{ item }">
-                <table-row-actions-column :workCard="item" @openModal="edit"/>
+                <table-row-actions-column :workCard="item"/>
             </template>
         </v-data-table>
     </div>
@@ -28,6 +28,7 @@
 <script>
     import {mapActions} from 'vuex';
     import WorkCard from "../../../utils/workCard/WorkCard";
+    import WorksTable from "../../../utils/worksTable/WorksTable";
     import TableTop from "./Top";
     import TableDateColumn from "./DateColumn";
     import TablePaymentColumn from "./PaymentColumn";
@@ -36,47 +37,12 @@
     export default {
         name : "WorksTable",
         props : {
-            works : {
-                type : Array,
-                default : () => {
-                    return [];
-                }
+            table : {
+                type : WorksTable,
             }
         },
         data() {
-            return {
-                search : '',
-                month : 0,
-                headers : [
-                    {
-                        text : 'תאריך',
-                        align : 'start',
-                        value : 'date',
-                        dataType : 'Date',
-                        width : 100,
-                        filter : value => {
-                            if (!parseInt(this.month)) return true;
-
-                            return new Date(value).getMonth() + 1 === parseInt(this.month);
-                        },
-                    },
-                    {
-                        text : 'איש קשר',
-                        value : 'contact',
-                    },
-                    { text : 'לקוח', value : 'companyType' },
-                    { text : 'לוחית רישוי', value : 'licensePlate', width : 95 },
-                    { text : 'שעות עבודה', value : 'workTime' },
-                    { text : 'תיאור עבודה', value : 'description', width : 350, height : 100 },
-                    { text : 'מחיר עבודה', value : 'workPrice' },
-                    { text : 'מחיר חלקים', value : 'partsPrice' },
-                    { text : 'הוצאות', value : 'partsCost' },
-                    { text : 'שולם', value : 'paidSum' },
-                    { text : 'אמצעי תשלום', value : 'paymentInstrument' },
-                    { text : 'הערות', value : 'notes', sortable : false },
-                    { text : 'פעולות', value : 'actions', sortable : false, width : 100 },
-                ]
-            }
+            return {}
         },
         components : {
             TableTop,
@@ -85,8 +51,29 @@
             TableRowActionsColumn
         },
         computed : {
+            works() {
+                if (!this.table)
+                    return [];
+
+                return this.table.works
+            },
+            headers() {
+                if (!this.table)
+                    return [];
+
+                return this.table.headers
+            },
+            search : {
+                get() {
+                    if (this.table) {
+                        return this.table.search;
+                    }
+
+                    return '';
+                }
+            },
             tableHeight() {
-                return document.body.clientHeight - 230;
+                return document.body.clientHeight - 255;
             }
         },
         methods : {
@@ -94,12 +81,6 @@
                 editWork : 'works/editWork',
                 deleteWork : 'works/deleteWork'
             }),
-            searchUpdate(val) {
-                this.search = val;
-            },
-            edit() {
-                this.$emit('openModal');
-            },
             searchFilter(value, search) {
                 return value != null && search != null &&
                     value.toString().toLowerCase().indexOf(search.toLowerCase()) !== -1
@@ -116,7 +97,7 @@
             paymentLabel(item) {
                 return new WorkCard(item).paymentInst.text;
             }
-        }
+        },
     }
 </script>
 

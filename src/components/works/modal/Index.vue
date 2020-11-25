@@ -31,7 +31,7 @@
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn
-                            @click="show = false"
+                            @click="close"
                             color="blue darken-1"
                             text
                             v-text="'Close'"
@@ -103,31 +103,34 @@
             ...mapState({
                 worksData : state => state.works.worksData,
                 modalWorkCard : state => state.works.modalWorkCard,
+                showModal : state => state.works.showModal,
             }),
             workCard() {
                 return this.modalWorkCard;
             },
             show : {
                 get() {
-                    return this.value
+                    return this.showModal;
                 },
-                set(value) {
-                    this.$emit('input', value)
+                set(val) {
+                    this.updateModal(val)
                 }
             }
         },
         methods : {
             ...mapActions({
                 addWork : 'works/newWork',
-                saveWork : 'works/updateWork'
+                saveWork : 'works/updateWork',
+                updateModal : 'works/updateModal'
             }),
             add() {
                 this.addWork(this.workCard);
-                this.show = true;
             },
             save() {
                 this.saveWork(this.workCard);
-                this.show = false;
+            },
+            close() {
+                this.updateModal(false)
             }
         }
     }
