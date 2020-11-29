@@ -1,14 +1,14 @@
 <template>
     <v-row class="companyInputsContainer">
         <v-col cols="12" md="4" sm="6">
-            <v-text-field label="איש קשר"
+            <v-text-field label="* איש קשר"
                           v-model="contact"
             ></v-text-field>
         </v-col>
         <v-col cols="12" md="4" sm="6">
             <v-autocomplete :input="companyType"
                             :items="['פרטי','יזמות','צבע ארגמן']"
-                            label="חברה"
+                            label="* חברה"
                             v-model="companyType"
             ></v-autocomplete>
         </v-col>

@@ -8,7 +8,7 @@
             ></v-text-field>
         </v-col>
         <v-col cols="12" md="4" sm="6">
-            <v-text-field label="* מחיר חלקים"
+            <v-text-field label="מחיר חלקים"
                           type="number"
                           v-model="workCard.partsPrice"
             ></v-text-field>

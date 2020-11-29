@@ -5,7 +5,7 @@
             ></v-checkbox>
         </v-col>
         <v-col cols="12" sm="5">
-            <v-text-field label="* שולם"
+            <v-text-field label="שולם"
                           required
                           v-model="workCard.paidSum"
             ></v-text-field>

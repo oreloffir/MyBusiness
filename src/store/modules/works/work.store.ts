@@ -6,7 +6,7 @@ import WorkCardDTO from "@/utils/workCard/WorkCardDTO";
 import WorksTable from "@/utils/worksTable/WorksTable";
 import DBConnector from "@/utils/DBConnector/DBConnector";
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
-// import worksData from "../../works.json";
+// import worksData from "../../ExcelWorks.json";
 Vue.use(Vuex);
 
 @Module({namespaced: true})
@@ -39,7 +39,7 @@ class Works extends VuexModule {
             .then(res => {
                 const worksData = Array<WorkCard>();
 
-                res.data.forEach((workData: WorkCardDTO) => {
+                res.data.reverse().forEach((workData: WorkCardDTO) => {
                     if (workData) {
                         worksData.push(new WorkCard(workData));
                     }
@@ -48,11 +48,12 @@ class Works extends VuexModule {
                 return this.context.commit('setWorks', worksData);
             });
 
-        // worksData.data.forEach(workData => {
+        // worksData.works.forEach(workData => {
+        //     console.log(workData);
         //     const [day, month, year] = workData.date.split('/');
         //     workData.date = Date.parse(`${month}/${day}/${year}`);
         //
-        //     dispatch('updateWork', new WorkCard(workData))
+        //     this.context.dispatch('updateWork', new WorkCard(workData))
         // })
     }
 

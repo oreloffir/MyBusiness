@@ -58,24 +58,29 @@ export default class WorkCard {
             case "CREDIT_CARD":
                 return {
                     value: "CREDIT_CARD",
-                    text: "אשראי"
+                    text: "אשראי",
+                    icon: "mdi-credit-card"
                 };
             case "REMITTANCE":
                 return {
                     value: "REMITTANCE",
-                    text: "העברה"
+                    text: "העברה",
+                    icon: "mdi-bank-transfer"
                 };
             case "CHECK":
                 return {
                     value: "CHECK",
-                    text: "צ'ק"
+                    text: "צ'ק",
+                    icon: "mdi-checkbook"
                 };
             case "CASH":
-            default:
                 return {
                     value: "CASH",
-                    text: "מזומן"
+                    text: "מזומן",
+                    icon: "mdi-cash-multiple"
                 };
+            default:
+                return null;
         }
     }
 

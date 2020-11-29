@@ -7,7 +7,7 @@
                 :search="search"
                 :fixed-header="true"
                 :height="tableHeight"
-                :footer-props="{'items-per-page-options': [-1, 10, 50, 250, 500]}"
+                :footer-props="{'items-per-page-options': [50, 250, 500, -1]}"
         >
             <template v-slot:top>
                 <table-top/>

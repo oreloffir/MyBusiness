@@ -56,7 +56,7 @@ export default class WorksTable {
                 value: 'contact',
             },
             {text: 'לקוח', value: 'companyType'},
-            {text: 'לוחית רישוי', value: 'licensePlate', width: 95},
+            {text: 'לוחית רישוי', value: 'licensePlate', width: 112},
             {text: 'שעות עבודה', value: 'workTime'},
             {text: 'תיאור עבודה', value: 'description', width: 350, height: 100},
             {text: 'מחיר עבודה', value: 'workPrice'},
