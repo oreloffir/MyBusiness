@@ -18,26 +18,24 @@
         }
 
         get paymentLabel(): string {
-            return this.workCard.paymentInst.text;
+            if (this.workCard.paymentInst)
+                return this.workCard.paymentInst.text;
+
+            return '';
         }
 
-        get paymentIcon(): string {
-            return this.workCard.paymentInst.icon;
+        get paymentIcon(): string | null {
+            if (this.workCard.paymentInst)
+                return this.workCard.paymentInst.icon;
+
+            return '';
         }
 
         get paymentIconColor(): string {
-            switch (this.workCard.paymentInst.value) {
-                case "CREDIT_CARD":
-                    return 'gray darken-2';
-                case "REMITTANCE":
-                    return 'purple darken-2';
-                case "CHECK":
-                    return 'yellow darken-2';
-                case "CASH":
-                    return 'green darken-2';
-                default:
-                    return null;
-            }
+            if (!this.workCard.paymentInst)
+                return 'black';
+
+            return this.workCard.paymentInst.color + ' darken-2';
         }
     }
 </script>

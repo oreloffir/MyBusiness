@@ -54,30 +54,33 @@ export default class WorkCard {
 
     get paymentInst() {
         switch (this.paymentInstrument) {
-
             case "CREDIT_CARD":
                 return {
                     value: "CREDIT_CARD",
                     text: "אשראי",
-                    icon: "mdi-credit-card"
+                    icon: "mdi-credit-card",
+                    color: 'gray'
                 };
             case "REMITTANCE":
                 return {
                     value: "REMITTANCE",
                     text: "העברה",
-                    icon: "mdi-bank-transfer"
+                    icon: "mdi-bank-transfer",
+                    color: 'purple'
                 };
             case "CHECK":
                 return {
                     value: "CHECK",
                     text: "צ'ק",
-                    icon: "mdi-checkbook"
+                    icon: "mdi-checkbook",
+                    color: 'yellow'
                 };
             case "CASH":
                 return {
                     value: "CASH",
                     text: "מזומן",
-                    icon: "mdi-cash-multiple"
+                    icon: "mdi-cash-multiple",
+                    color: 'green'
                 };
             default:
                 return null;

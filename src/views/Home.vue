@@ -1,16 +1,19 @@
 <template>
   <div class="home">
-    <HelloWorld msg="Yoel & Cohcav Transportation"/>
+      <logo msg="Yoel & Cohcav Transportation"/>
+      <dashboard></dashboard>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+    import {Component, Vue} from 'vue-property-decorator';
+    import Logo from '@/components/Logo.vue';
+    import Dashboard from '@/components/dashboard/Index.vue';
 
-@Component({
+    @Component({
   components: {
-    HelloWorld,
+      Logo,
+      Dashboard
   },
 })
 export default class Home extends Vue {}

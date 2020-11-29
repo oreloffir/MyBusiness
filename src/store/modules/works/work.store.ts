@@ -70,7 +70,7 @@ class Works extends VuexModule {
             return workCard.id === workData.id;
         }).pop();
 
-        DBConnector.worksCollection.child(String(workData.id)).update(workData.firebaseObject).then(res => {
+        DBConnector.worksCollection.child(String(workData.id)).update(workData.firebaseObject).then(() => {
             if (existingWorkCard) {
                 this.context.commit('setUpdateWork', workData);
             } else {
@@ -94,7 +94,7 @@ class Works extends VuexModule {
         }).pop();
 
         if (existingWorkCard) {
-            DBConnector.worksCollection.child(String(existingWorkCard.id)).remove().then(res => {
+            DBConnector.worksCollection.child(String(existingWorkCard.id)).remove().then(() => {
                 this.context.commit('setDeleteWork', existingWorkCard);
             }).catch(err => alert("שגיאה בזמן מחיקה\n" + err));
         }
