@@ -7,6 +7,7 @@ import WorksTable from "@/utils/worksTable/WorksTable";
 import DBConnector from "@/utils/DBConnector/DBConnector";
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 // import worksData from "../../ExcelWorks.json";
+
 Vue.use(Vuex);
 
 @Module({namespaced: true})
@@ -71,10 +72,8 @@ class Works extends VuexModule {
             return workCard.id === workData.id;
         }).pop();
 
-        console.log('Work update existingWorkCard', existingWorkCard);
 
         DBConnector.worksCollection.child(String(workData.id)).update(workData.firebaseObject).then(() => {
-            console.log('Work updated successfully');
             if (existingWorkCard) {
                 this.context.commit('setUpdateWork', workData);
             } else {
