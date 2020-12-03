@@ -25,10 +25,11 @@ class Works extends VuexModule {
     }
 
     get emptyWorkCard() {
-        const lastId = this.worksData.length ? this.worksData[this.worksData.length - 1].id : null;
+        const worksDataMaxId = this.worksData.length ? Math.max(...this.worksData.map(work => work.id)) : null;
+        const lastId = worksDataMaxId ? worksDataMaxId + 1 : 9999;
 
         return new WorkCard({
-            id: lastId ? lastId + 1 : 1,
+            id: lastId,
             date: Date.now()
         });
     }
@@ -70,7 +71,10 @@ class Works extends VuexModule {
             return workCard.id === workData.id;
         }).pop();
 
+        console.log('Work update existingWorkCard', existingWorkCard);
+
         DBConnector.worksCollection.child(String(workData.id)).update(workData.firebaseObject).then(() => {
+            console.log('Work updated successfully');
             if (existingWorkCard) {
                 this.context.commit('setUpdateWork', workData);
             } else {
