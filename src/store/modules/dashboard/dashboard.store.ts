@@ -28,7 +28,7 @@ class Works extends VuexModule {
         };
 
         this.worksData.forEach((work) => {
-            const paymentLabel = work.paymentInst ? work.paymentInst.text : 'אחר';
+            const paymentLabel = work.paymentInst ? work.paymentInst.label : 'אחר';
             let index = payload.labels.indexOf(paymentLabel);
 
             if (index === -1) {

@@ -25,4 +25,23 @@ export default class PaymentInstrumentService {
             color: 'green'
         }]
     }
+
+    public static enum(value: string | undefined): PaymentInstrumentEnum | undefined {
+        switch (value) {
+            case PaymentInstrumentEnum.CHECK:
+                return PaymentInstrumentEnum.CHECK;
+            case PaymentInstrumentEnum.REMITTANCE:
+                return PaymentInstrumentEnum.REMITTANCE;
+            case PaymentInstrumentEnum.CREDIT_CARD:
+                return PaymentInstrumentEnum.CREDIT_CARD;
+            case PaymentInstrumentEnum.CASH:
+                return PaymentInstrumentEnum.CASH;
+        }
+    }
+
+    public static instrument(value: string): PaymentInstrumentInterface | undefined {
+        return PaymentInstrumentService.paymentInstruments.filter((instrument) => {
+            return instrument.value === value;
+        }).pop();
+    }
 }

@@ -1,4 +1,6 @@
 import WorkCardDTO from './WorkCardDTO';
+import PaymentInstrumentEnum from "@/utils/paymentInstrument/paymentInstrument.enum";
+import PaymentInstrumentService from "@/utils/paymentInstrument/paymentInstrument.service";
 
 export default class WorkCard {
     public id: number;
@@ -15,7 +17,7 @@ export default class WorkCard {
     public partsCost?: number;
     public paidSum?: number;
     public paid?: boolean;
-    public paymentInstrument?: string;
+    public paymentInstrument?: PaymentInstrumentEnum;
     public notes?: string;
 
     constructor(data: WorkCardDTO
@@ -34,7 +36,7 @@ export default class WorkCard {
         this.partsCost = data.partsCost;
         this.paidSum = data.paidSum;
         this.paid = data.paid;
-        this.paymentInstrument = data.paymentInstrument;
+        this.paymentInstrument = PaymentInstrumentService.enum(data.paymentInstrument);
         this.notes = data.notes;
     }
 
@@ -53,42 +55,19 @@ export default class WorkCard {
     }
 
     get paymentInst() {
-        switch (this.paymentInstrument) {
-            case "CREDIT_CARD":
-                return {
-                    value: "CREDIT_CARD",
-                    text: "אשראי",
-                    icon: "mdi-credit-card",
-                    color: 'gray'
-                };
-            case "REMITTANCE":
-                return {
-                    value: "REMITTANCE",
-                    text: "העברה",
-                    icon: "mdi-bank-transfer",
-                    color: 'purple'
-                };
-            case "CHECK":
-                return {
-                    value: "CHECK",
-                    text: "צ'ק",
-                    icon: "mdi-checkbook",
-                    color: 'yellow'
-                };
-            case "CASH":
-                return {
-                    value: "CASH",
-                    text: "מזומן",
-                    icon: "mdi-cash-multiple",
-                    color: 'green'
-                };
-            default:
-                return null;
-        }
+        if (!this.paymentInstrument)
+            return null;
+
+        return PaymentInstrumentService.instrument(this.paymentInstrument);
     }
 
     set paymentInst(value) {
-        this.paymentInstrument = String(value);
+        console.log('HERE');
+        if (!value)
+            return;
+
+
+        // this.paymentInstrument = PaymentInstrumentService.instrument(value);
     }
 
     get firebaseObject() {

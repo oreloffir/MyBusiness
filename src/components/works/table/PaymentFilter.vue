@@ -28,7 +28,7 @@
             super();
         }
 
-        static get paymentInstruments(): Array<PaymentInstrumentInterface> {
+        get paymentInstruments(): Array<PaymentInstrumentInterface> {
             return PaymentInstrumentService.paymentInstruments;
         }
 
@@ -38,7 +38,7 @@
 
             value.forEach((value: string) => {
                 const index = parseInt(value);
-                const selectedInstrument = PaymentFilter.paymentInstruments[index];
+                const selectedInstrument = this.paymentInstruments[index];
 
                 if (selectedInstrument) {
                     this.worksTable.paymentInstrumentFilter.instruments.set(selectedInstrument.value, index);

@@ -37,7 +37,7 @@
             }
         },
         mounted() {
-            console.log(this.value);
+            // console.log(this.value);
         }
     }
 </script>

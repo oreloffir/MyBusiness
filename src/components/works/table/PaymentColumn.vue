@@ -19,7 +19,7 @@
 
         get paymentLabel(): string {
             if (this.workCard.paymentInst)
-                return this.workCard.paymentInst.text;
+                return this.workCard.paymentInst.label;
 
             return '';
         }
