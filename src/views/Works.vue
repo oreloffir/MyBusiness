@@ -1,6 +1,13 @@
 <template>
     <div class="works">
-        <works-modal v-model="showModal"></works-modal>
+        <v-row style="display: flex; justify-content: space-between">
+            <v-col>
+                <works-modal v-model="showModal"></works-modal>
+            </v-col>
+            <v-col class="col-sm-1" cols="12">
+                <works-summery></works-summery>
+            </v-col>
+        </v-row>
         <works-table :table="worksTable"></works-table>
     </div>
 </template>
@@ -9,9 +16,11 @@
     import {mapActions, mapState} from 'vuex';
     import WorksTable from '../components/works/table/Index';
     import WorksModal from '../components/works/modal/Index';
+    import WorksSummery from '../components/works/summery/Index';
 
     export default {
         components : {
+            WorksSummery,
             WorksTable,
             WorksModal
         },
@@ -30,7 +39,7 @@
                 init : 'works/initialize'
             })
         },
-        created(){
+        created() {
             this.init();
         }
     }

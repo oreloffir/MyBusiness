@@ -1,8 +1,8 @@
 <template>
-  <div class="home">
-      <logo msg="Yoel & Cohcav Transportation"/>
-      <dashboard></dashboard>
-  </div>
+    <div class="home">
+        <logo msg="Yoel & Cohcav Transportation"/>
+        <dashboard></dashboard>
+    </div>
 </template>
 
 <script lang="ts">
@@ -11,10 +11,11 @@
     import Dashboard from '@/components/dashboard/Index.vue';
 
     @Component({
-  components: {
-      Logo,
-      Dashboard
-  },
-})
-export default class Home extends Vue {}
+        components: {
+            Logo,
+            Dashboard
+        },
+    })
+    export default class Home extends Vue {
+    }
 </script>

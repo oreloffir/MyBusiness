@@ -5,6 +5,9 @@ interface FiltersInterface {
         months: Map<number, string>;
         years: Map<number, string>;
     };
+    paymentInstrument: {
+        instruments: Map<string, number>;
+    };
 }
 
 export default class WorksTable {
@@ -18,6 +21,9 @@ export default class WorksTable {
             date: {
                 months: new Map(),
                 years: new Map(),
+            },
+            paymentInstrument: {
+                instruments: new Map()
             }
         };
     }
@@ -34,6 +40,10 @@ export default class WorksTable {
 
     get dateFilter() {
         return this._filter.date;
+    }
+
+    get paymentInstrumentFilter() {
+        return this._filter.paymentInstrument;
     }
 
     get headers() {
@@ -63,7 +73,16 @@ export default class WorksTable {
             {text: 'מחיר חלקים', value: 'partsPrice'},
             {text: 'הוצאות', value: 'partsCost'},
             {text: 'שולם', value: 'paidSum'},
-            {text: 'אמצעי תשלום', value: 'paymentInstrument'},
+            {
+                text: 'אמצעי תשלום',
+                value: 'paymentInstrument',
+                filter: (instrument: string) => {
+                    if (!this.paymentInstrumentFilter.instruments.size)
+                        return true;
+
+                    return this.paymentInstrumentFilter.instruments.has(instrument);
+                },
+            },
             {text: 'הערות', value: 'notes', sortable: false},
             {text: 'פעולות', value: 'actions', sortable: false, width: 100},
         ];

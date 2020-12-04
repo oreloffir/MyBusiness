@@ -16,6 +16,7 @@
                     v-model="monthSelection"
             ></v-select>
         </v-col>
+        <payment-filter></payment-filter>
     </v-row>
 </template>
 
@@ -23,10 +24,16 @@
     import {Component, Vue, Watch} from "vue-property-decorator";
     import {namespace} from 'vuex-class';
     import WorksTable from "@/utils/worksTable/WorksTable";
+    import PaymentFilter from './PaymentFilter'
 
     const works = namespace('works');
 
-    @Component
+    @Component({
+        name: 'TableTop',
+        components: {
+            PaymentFilter
+        },
+    })
     export default class TableTop extends Vue {
         @works.State
         public worksTable: WorksTable;
