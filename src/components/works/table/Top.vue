@@ -24,7 +24,7 @@
     import {Component, Vue, Watch} from "vue-property-decorator";
     import {namespace} from 'vuex-class';
     import WorksTable from "@/utils/worksTable/WorksTable";
-    import PaymentFilter from './PaymentFilter'
+    import PaymentFilter from "@/components/works/table/PaymentFilter.vue";
 
     const works = namespace('works');
 

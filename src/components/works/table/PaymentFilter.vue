@@ -14,6 +14,7 @@
     import {namespace} from 'vuex-class';
     import WorksTable from "@/utils/worksTable/WorksTable";
     import PaymentInstrumentService from "@/utils/paymentInstrument/paymentInstrument.service";
+    import PaymentInstrumentInterface from "@/utils/paymentInstrument/paymentInstrument.interface";
 
     const works = namespace('works');
 
@@ -27,7 +28,7 @@
             super();
         }
 
-        get paymentInstruments(): Array<PaymentInstrumentInterface> {
+        static get paymentInstruments(): Array<PaymentInstrumentInterface> {
             return PaymentInstrumentService.paymentInstruments;
         }
 
@@ -35,11 +36,12 @@
         private updatePaymentSelection(value: Array<string>) {
             this.worksTable.paymentInstrumentFilter.instruments = new Map();
 
-            value.forEach(index => {
-                const selectedInstrument = this.paymentInstruments[index];
+            value.forEach((value: string) => {
+                const index = parseInt(value);
+                const selectedInstrument = PaymentFilter.paymentInstruments[index];
 
                 if (selectedInstrument) {
-                    this.worksTable.paymentInstrumentFilter.instruments.set(selectedInstrument.value, parseInt(index));
+                    this.worksTable.paymentInstrumentFilter.instruments.set(selectedInstrument.value, index);
                 }
             });
         }

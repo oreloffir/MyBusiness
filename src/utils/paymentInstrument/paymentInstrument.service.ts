@@ -1,4 +1,5 @@
-import PaymentInstrumentEnum from './paymentInstrument.enum';
+import PaymentInstrumentEnum from "@/utils/paymentInstrument/paymentInstrument.enum";
+import PaymentInstrumentInterface from "@/utils/paymentInstrument/paymentInstrument.interface";
 
 export default class PaymentInstrumentService {
     public static get paymentInstruments(): Array<PaymentInstrumentInterface> {
