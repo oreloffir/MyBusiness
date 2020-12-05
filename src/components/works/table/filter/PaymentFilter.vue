@@ -1,20 +1,18 @@
 <template>
-    <v-col cols="12" lg="4" md="6" sm="12">
-        <v-chip-group column multiple v-model="paymentSelection">
-            <v-chip :key="payment.value" filter outlined v-for="payment in paymentInstruments">
-                <v-icon :color="payment.color + ' darken-2'" small>{{ payment.icon }}</v-icon>
-                <span>{{ payment.label }}</span>
-            </v-chip>
-        </v-chip-group>
-    </v-col>
+    <v-chip-group column multiple v-model="paymentSelection">
+        <v-chip :key="payment.value" filter outlined v-for="payment in paymentInstruments">
+            <v-icon :color="payment.color + ' darken-2'" small>{{ payment.icon }}</v-icon>
+            <span>{{ payment.label }}</span>
+        </v-chip>
+    </v-chip-group>
 </template>
 
 <script lang="ts">
     import {Component, Vue, Watch} from "vue-property-decorator";
     import {namespace} from 'vuex-class';
-    import WorksTable from "@/utils/worksTable/WorksTable";
-    import PaymentInstrumentService from "@/utils/paymentInstrument/paymentInstrument.service";
-    import PaymentInstrumentInterface from "@/utils/paymentInstrument/paymentInstrument.interface";
+    import WorksTable from "../../../../utils/worksTable/WorksTable";
+    import PaymentInstrumentService from "../../../../utils/paymentInstrument/paymentInstrument.service";
+    import PaymentInstrumentInterface from "../../../../utils/paymentInstrument/paymentInstrument.interface";
 
     const works = namespace('works');
 
