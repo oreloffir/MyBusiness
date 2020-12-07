@@ -12,6 +12,7 @@ interface FiltersInterface {
 
 export default class WorksTable {
     public works: Array<WorkCard>;
+    public displayed: Array<WorkCard>;
     private _filter: FiltersInterface;
 
     constructor(works: Array<WorkCard>) {
@@ -36,6 +37,14 @@ export default class WorksTable {
 
     set search(val) {
         this._search = val;
+    }
+
+    get displayedWorks() {
+        return this.displayed;
+    }
+
+    set displayedWorks(val) {
+        this.displayed = val;
     }
 
     get dateFilter() {

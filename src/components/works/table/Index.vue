@@ -8,6 +8,7 @@
                 :fixed-header="true"
                 :height="tableHeight"
                 :footer-props="{'items-per-page-options': [50, 250, 500, -1]}"
+                @current-items="setDisplayedWorks"
         >
             <template v-slot:top>
                 <table-top/>
@@ -96,6 +97,12 @@
             },
             paymentLabel(item) {
                 return new WorkCard(item).paymentInst.text;
+            },
+            setDisplayedWorks(items) {
+                if (!this.table)
+                    return;
+
+                this.table.displayedWorks = items;
             }
         },
     }

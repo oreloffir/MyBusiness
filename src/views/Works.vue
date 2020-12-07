@@ -4,9 +4,6 @@
             <v-col>
                 <works-modal v-model="showModal"></works-modal>
             </v-col>
-            <v-col class="col-sm-1" cols="12">
-                <works-summery></works-summery>
-            </v-col>
         </v-row>
         <works-table :table="worksTable"></works-table>
     </div>
@@ -16,11 +13,9 @@
     import {mapActions, mapState} from 'vuex';
     import WorksTable from '../components/works/table/Index';
     import WorksModal from '../components/works/modal/Index';
-    import WorksSummery from '../components/works/summery/Index';
 
     export default {
         components : {
-            WorksSummery,
             WorksTable,
             WorksModal
         },

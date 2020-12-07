@@ -9,6 +9,9 @@
         <v-col cols="12" lg="4" md="6" sm="12">
             <payment-filter></payment-filter>
         </v-col>
+        <v-col cols="12" lg="2" md="2" sm="3">
+            <summery></summery>
+        </v-col>
     </v-row>
 </template>
 
@@ -17,6 +20,7 @@
     import PaymentFilter from "@/components/works/table/filter/PaymentFilter.vue";
     import SearchFilter from "@/components/works/table/filter/SearchFilter.vue";
     import DateFilter from "@/components/works/table/filter/DateFilter.vue";
+    import Summery from "@/components/works/summery/Index.vue";
 
 
     @Component({
@@ -25,6 +29,7 @@
             PaymentFilter,
             SearchFilter,
             DateFilter,
+            Summery,
         },
     })
     export default class TableTop extends Vue {
