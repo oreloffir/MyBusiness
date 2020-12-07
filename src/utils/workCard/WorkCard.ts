@@ -61,15 +61,6 @@ export default class WorkCard {
         return PaymentInstrumentService.instrument(this.paymentInstrument);
     }
 
-    set paymentInst(value) {
-        console.log('HERE');
-        if (!value)
-            return;
-
-
-        // this.paymentInstrument = PaymentInstrumentService.instrument(value);
-    }
-
     get firebaseObject() {
         return {
             id: this.id ? this.id : null,

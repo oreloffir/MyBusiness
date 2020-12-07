@@ -14,7 +14,7 @@
             <v-autocomplete :items="paymentSelectItems"
                             label="אמצעי תשלום"
                             single
-                            v-model="workCard.paymentInst"
+                            v-model="workCard.paymentInstrument"
             ></v-autocomplete>
         </v-col>
     </v-row>
