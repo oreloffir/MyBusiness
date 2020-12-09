@@ -1,16 +1,15 @@
 import Vue from "vue";
-// import axios from 'axios';
+import firebase from "firebase";
 import Vuex, {Module as Mod} from 'vuex';
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
-import Firebase from "@/utils/firebase/Firebase";
 import router from "@/router";
-import UserCredential = firebase.auth.UserCredential;
+import Firebase from "@/utils/firebaseUtil/Firebase";
 
 Vue.use(Vuex);
 
 @Module({namespaced: true})
 class Auth extends VuexModule {
-    public user?: UserCredential;
+    public user?: firebase.User;
     public errors: Array<string> = [];
 
     // eslint-disable-next-line
@@ -20,13 +19,12 @@ class Auth extends VuexModule {
 
     @Action
     login(data: { email: string; password: string }) {
-        console.log("Login");
-        console.log(data.email);
-        console.log(data.password);
         try {
             Firebase.auth.signInWithEmailAndPassword(data.email, data.password).then(res => {
-                this.user = res;
-                router.replace({name: 'Works'});
+                if (res.user) {
+                    this.user = res.user;
+                    router.replace({name: 'Works'});
+                }
             }).catch(err => {
                 this.context.commit('setErrors', [err.message]);
             });
@@ -42,7 +40,7 @@ class Auth extends VuexModule {
     }
 
     @Mutation
-    setUser(user: UserCredential) {
+    setUser(user: firebase.User) {
         this.user = user;
     }
 

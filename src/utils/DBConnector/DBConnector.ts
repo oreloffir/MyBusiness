@@ -1,4 +1,4 @@
-import Firebase from "@/utils/firebase/Firebase";
+import Firebase from "@/utils/firebaseUtil/Firebase";
 
 export default new class DBConnector {
 
