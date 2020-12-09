@@ -1,9 +1,8 @@
-import { db } from '../../firebase/';
+import Firebase from "@/utils/firebase/Firebase";
 
 export default new class DBConnector {
-    private _DB = db;
 
     get worksCollection() {
-        return this._DB.ref('works');
+        return Firebase.db.ref('works');
     }
 }

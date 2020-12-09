@@ -15,6 +15,7 @@
 
                 <router-link class="link" to="/">Home</router-link>
                 <router-link class="link" to="/works">Works</router-link>
+                <router-link class="link" to="/login">Login</router-link>
             </div>
         </v-app-bar>
 

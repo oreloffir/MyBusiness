@@ -1,5 +1,8 @@
-/*import firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/database';
+import 'firebase/auth';
+import Database = firebase.database.Database;
+import Auth = firebase.auth.Auth;
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -16,7 +19,17 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// utils
-const db = firebase.database();
 
-export { db }*/
+export default new class Firebase {
+    private static _db: Database = firebase.database();
+
+    get db() {
+        return Firebase._db;
+    }
+
+    private static _auth: Auth = firebase.auth();
+
+    get auth() {
+        return Firebase._auth;
+    }
+}

@@ -82,7 +82,7 @@ class Works extends VuexModule {
 
             this.context.commit('setShowModal', false);
             this.context.commit('resetModalWorkCard', this.context.getters['emptyWorkCard']);
-        }).catch(err => alert("שגיאה בזמן שמירה\n" + err));
+        }).catch((err: Error) => alert("שגיאה בזמן שמירה\n" + err));
     }
 
     @Action
@@ -99,7 +99,7 @@ class Works extends VuexModule {
         if (existingWorkCard) {
             DBConnector.worksCollection.child(String(existingWorkCard.id)).remove().then(() => {
                 this.context.commit('setDeleteWork', existingWorkCard);
-            }).catch(err => alert("שגיאה בזמן מחיקה\n" + err));
+            }).catch((err: Error) => alert("שגיאה בזמן מחיקה\n" + err));
         }
     }
 
