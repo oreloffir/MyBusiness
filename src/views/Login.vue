@@ -64,7 +64,8 @@
         },
         methods : {
             ...mapActions({
-                login : 'auth/login'
+                login : 'auth/login',
+                logout : 'auth/logout'
             }),
             submit() {
                 if (!this.valid)
@@ -76,6 +77,7 @@
             }
         },
         mounted() {
+            this.logout();
             this.$refs.email.focus();
         }
     }

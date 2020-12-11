@@ -4,7 +4,7 @@ import Vuex, {Module as Mod} from 'vuex';
 import WorkCard from "@/utils/workCard/WorkCard";
 import WorkCardDTO from "@/utils/workCard/WorkCardDTO";
 import WorksTable from "@/utils/worksTable/WorksTable";
-import DBConnector from "@/utils/DBConnector/DBConnector";
+import DBConnector from "@/utils/firebase/DBConnector";
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 // import worksData from "../../ExcelWorks.json";
 
