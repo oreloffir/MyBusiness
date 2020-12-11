@@ -1,11 +1,10 @@
 import Vue from "vue";
-import axios from 'axios';
 import Vuex, {Module as Mod} from 'vuex';
 import WorkCard from "@/utils/workCard/WorkCard";
-import WorkCardDTO from "@/utils/workCard/WorkCardDTO";
 import WorksTable from "@/utils/worksTable/WorksTable";
 import DBConnector from "@/utils/firebase/DBConnector";
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
+import DataSnapshot = firebase.database.DataSnapshot;
 // import worksData from "../../ExcelWorks.json";
 
 Vue.use(Vuex);
@@ -22,7 +21,7 @@ class Works extends VuexModule {
         super(module);
         this.showModal = false;
         this.modalWorkCard = this.emptyWorkCard;
-        this.worksData.push(this.modalWorkCard)
+        this.worksData.push(this.modalWorkCard);
     }
 
     get emptyWorkCard() {
@@ -37,18 +36,17 @@ class Works extends VuexModule {
 
     @Action
     initialize() {
-        axios.get('https://mybusiness-49812.firebaseio.com/works.json')
-            .then(res => {
-                const worksData = Array<WorkCard>();
+        DBConnector.worksCollection.once('value', (snap) => {
+            const worksData = Array<WorkCard>();
 
-                res.data.reverse().forEach((workData: WorkCardDTO) => {
-                    if (workData) {
-                        worksData.push(new WorkCard(workData));
-                    }
-                });
-
-                return this.context.commit('setWorks', worksData);
+            snap.forEach((workData: DataSnapshot) => {
+                if (workData) {
+                    worksData.push(new WorkCard(workData.val()));
+                }
             });
+
+            this.context.commit('setWorks', worksData.reverse());
+        });
 
         // worksData.works.forEach(workData => {
         //     console.log(workData);

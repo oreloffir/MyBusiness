@@ -1,17 +1,16 @@
 import Vue from "vue";
-import axios from 'axios';
 import Vuex, {Module as Mod} from 'vuex';
 import Chart from 'chart.js';
 import WorkCard from "@/utils/workCard/WorkCard";
-import WorkCardDTO from "@/utils/workCard/WorkCardDTO";
-// import DBConnector from "@/utils/DBConnector/DBConnector";
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import PayChartPayloadInterface from "@/utils/interfaces/PayChartPayload.interface";
+import DBConnector from "@/utils/firebase/DBConnector";
+import DataSnapshot = firebase.database.DataSnapshot;
 
 Vue.use(Vuex);
 
 @Module({namespaced: true})
-class Works extends VuexModule {
+class Dashboard extends VuexModule {
     public worksData: Array<WorkCard> = [];
 
     // eslint-disable-next-line
@@ -27,7 +26,7 @@ class Works extends VuexModule {
             colors: ['#388E3C', '#7b1fa2', '#fbc02d', '#f233ad'],
         };
 
-        this.worksData.forEach((work) => {
+        this.worksData.forEach((work: WorkCard) => {
             const paymentLabel = work.paymentInst ? work.paymentInst.label : 'אחר';
             let index = payload.labels.indexOf(paymentLabel);
 
@@ -46,18 +45,17 @@ class Works extends VuexModule {
 
     @Action
     initialize() {
-        axios.get('https://mybusiness-49812.firebaseio.com/works.json')
-            .then(res => {
-                const worksData = Array<WorkCard>();
+        DBConnector.worksCollection.once('value', (snap) => {
+            const worksData = Array<WorkCard>();
 
-                res.data.forEach((workData: WorkCardDTO) => {
-                    if (workData) {
-                        worksData.push(new WorkCard(workData));
-                    }
-                });
-
-                return this.context.commit('setWorks', worksData);
+            snap.forEach((workData: DataSnapshot) => {
+                if (workData) {
+                    worksData.push(new WorkCard(workData.val()));
+                }
             });
+
+            this.context.commit('setWorks', worksData.reverse());
+        });
     }
 
     @Mutation
@@ -66,4 +64,4 @@ class Works extends VuexModule {
     }
 }
 
-export default Works
+export default Dashboard

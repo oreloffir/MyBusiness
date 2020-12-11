@@ -47,7 +47,7 @@
 
         public constructor() {
             super();
-            this.initialize();
+            // this.initialize();
         }
 
         @Action('dashboard/initialize')
