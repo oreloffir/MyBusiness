@@ -6,10 +6,10 @@
         <v-col cols="12" lg="4" md="6" sm="12">
             <date-filter></date-filter>
         </v-col>
-        <v-col cols="12" lg="4" md="6" sm="12">
+        <v-col cols="12" lg="4" md="8" sm="12">
             <payment-filter></payment-filter>
         </v-col>
-        <v-col cols="12" lg="2" md="2" sm="3">
+        <v-col cols="12" lg="2" md="4" sm="12">
             <summery></summery>
         </v-col>
     </v-row>
