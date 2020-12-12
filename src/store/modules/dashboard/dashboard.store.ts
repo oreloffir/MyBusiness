@@ -5,6 +5,7 @@ import WorkCard from "@/utils/workCard/WorkCard";
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import PayChartPayloadInterface from "@/utils/interfaces/PayChartPayload.interface";
 import DBConnector from "@/utils/firebase/DBConnector";
+import firebase from "firebase"
 import DataSnapshot = firebase.database.DataSnapshot;
 
 Vue.use(Vuex);

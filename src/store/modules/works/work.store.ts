@@ -4,6 +4,7 @@ import WorkCard from "@/utils/workCard/WorkCard";
 import WorksTable from "@/utils/worksTable/WorksTable";
 import DBConnector from "@/utils/firebase/DBConnector";
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
+import firebase from "firebase"
 import DataSnapshot = firebase.database.DataSnapshot;
 // import worksData from "../../ExcelWorks.json";
 
@@ -36,7 +37,7 @@ class Works extends VuexModule {
 
     @Action
     initialize() {
-        DBConnector.worksCollection.once('value', (snap) => {
+        DBConnector.worksCollection.once('value', (snap: DataSnapshot) => {
             const worksData = Array<WorkCard>();
 
             snap.forEach((workData: DataSnapshot) => {
