@@ -3,6 +3,7 @@ import PaymentInstrumentEnum from "@/utils/paymentInstrument/paymentInstrument.e
 interface PaymentInstrumentInterface {
     value: PaymentInstrumentEnum;
     label: string;
+    fullText: string;
     icon: string;
     color: string;
 }

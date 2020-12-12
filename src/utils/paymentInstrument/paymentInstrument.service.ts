@@ -6,23 +6,39 @@ export default class PaymentInstrumentService {
         return [{
             value: PaymentInstrumentEnum.CREDIT_CARD,
             label: "אשראי",
-            icon: "mdi-credit-card",
-            color: 'gray'
+            fullText: "אשראי",
+            icon: "mdi-credit-card-outline",
+            color: 'indigo accent-2'
         }, {
             value: PaymentInstrumentEnum.REMITTANCE,
             label: "העברה",
+            fullText: "העברה",
             icon: "mdi-bank-transfer",
             color: 'purple'
         }, {
             value: PaymentInstrumentEnum.CHECK,
             label: "צ'ק",
+            fullText: "צ'ק",
             icon: "mdi-checkbook",
             color: 'yellow'
         }, {
             value: PaymentInstrumentEnum.CASH,
             label: "מזומן",
+            fullText: "מזומן",
             icon: "mdi-cash-multiple",
             color: 'green'
+        }, {
+            value: PaymentInstrumentEnum.WAITING_FOR_PAYMENT,
+            label: "ממתין",
+            fullText: "ממתין לתשלום",
+            icon: "mdi-progress-clock",
+            color: 'red'
+        }, {
+            value: PaymentInstrumentEnum.UNPAID,
+            label: "לא שולם",
+            fullText: "לא שולם (בוטל)",
+            icon: "mdi-cancel",
+            color: 'red darken-4'
         }]
     }
 
@@ -36,6 +52,10 @@ export default class PaymentInstrumentService {
                 return PaymentInstrumentEnum.CREDIT_CARD;
             case PaymentInstrumentEnum.CASH:
                 return PaymentInstrumentEnum.CASH;
+            case PaymentInstrumentEnum.UNPAID:
+                return PaymentInstrumentEnum.UNPAID;
+            case PaymentInstrumentEnum.WAITING_FOR_PAYMENT:
+                return PaymentInstrumentEnum.WAITING_FOR_PAYMENT;
         }
     }
 

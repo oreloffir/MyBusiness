@@ -36,7 +36,7 @@ export default class WorkCard {
         this.partsCost = data.partsCost;
         this.paidSum = data.paidSum;
         this.paid = data.paid;
-        this.paymentInstrument = PaymentInstrumentService.enum(data.paymentInstrument);
+        this.paymentInstrument = PaymentInstrumentService.enum(data.paymentInstrument) || PaymentInstrumentEnum.WAITING_FOR_PAYMENT;
         this.notes = data.notes;
     }
 

@@ -24,6 +24,7 @@
     import {Component, Vue} from "vue-property-decorator";
     import {namespace} from 'vuex-class';
     import WorkCard from "@/utils/workCard/WorkCard";
+    import PaymentInstrumentService from "@/utils/paymentInstrument/paymentInstrument.service";
 
     const works = namespace('works');
 
@@ -33,26 +34,14 @@
         public modalWorkCard!: WorkCard;
         public paymentSelectItems !: Array<{ value: string; text: string }>;
 
-        constructor() {
-            super();
-            this.paymentSelectItems = [
-                {
-                    value: "CHECK",
-                    text: "צ'ק"
-                },
-                {
-                    value: "CASH",
-                    text: "מזומן"
-                },
-                {
-                    value: "CREDIT_CARD",
-                    text: "כרטיס אשראי"
-                },
-                {
-                    value: "REMITTANCE",
-                    text: "העברה בנקאית"
-                }
-            ]
+        created() {
+            this.processPaymentInstrumentItems();
+        }
+
+        public processPaymentInstrumentItems() {
+            this.paymentSelectItems = PaymentInstrumentService.paymentInstruments.map(instrument => {
+                return {value: instrument.value, text: instrument.fullText};
+            });
         }
 
         get workCard() {
