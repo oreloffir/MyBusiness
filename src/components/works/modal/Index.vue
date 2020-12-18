@@ -23,7 +23,7 @@
                             <work-description-input></work-description-input>
                             <work-price-inputs></work-price-inputs>
                             <work-payment-inputs></work-payment-inputs>
-                            <v-container v-show="workCard.paid">
+                            <v-container :key="workCard.id" v-show="workCard.paid">
                                 <work-tax-invoice-input></work-tax-invoice-input>
                             </v-container>
                             <work-notes-input></work-notes-input>

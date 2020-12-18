@@ -1,6 +1,8 @@
 import firebase from 'firebase/app';
+import 'firebase/storage';
 import 'firebase/database';
 import 'firebase/auth';
+import Storage = firebase.storage.Storage;
 import Database = firebase.database.Database;
 import Auth = firebase.auth.Auth;
 
@@ -25,6 +27,12 @@ export default new class Firebase {
 
     get db() {
         return Firebase._db;
+    }
+
+    private static _storage: Storage = firebase.storage();
+
+    get storage() {
+        return Firebase._storage;
     }
 
     private static _auth: Auth = firebase.auth();

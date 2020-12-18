@@ -1,11 +1,14 @@
 <template>
     <div class="rowActionsWrapper">
-        <!--Tax invoice link icon-->
-        <a :href="workCard.taxInvoice" v-if="workCard.taxInvoice">
-            <v-icon>mdi-notebook-check</v-icon>
-        </a>
         <!--Edit work icon-->
         <v-icon @click="edit">mdi-briefcase-edit</v-icon>
+        <!--Tax invoice link icon-->
+        <a @click.prevent="openInvoice"
+           target="popup"
+           v-if="workCard.invoiceReceiptLink"
+        >
+            <v-icon>mdi-notebook-check</v-icon>
+        </a>
         <!--Delete work icon + modal-->
         <v-dialog
                 max-width="300"
@@ -51,6 +54,7 @@
     import {Component, Prop, Vue} from "vue-property-decorator";
     import {Action} from "vuex-class"
     import WorkCard from "@/utils/workCard/WorkCard";
+    import StorageConnector from "@/utils/firebase/StorageConnector";
 
     @Component
     export default class TableRowActionsColumn extends Vue {
@@ -68,6 +72,14 @@
 
         remove() {
             this.deleteWork(this.workCard)
+        }
+
+        openInvoice() {
+            StorageConnector.storageCollection.ref(this.workCard.invoiceReceiptLink)
+                .getDownloadURL()
+                .then((url) => {
+                    window.open(url, 'name', 'width=750,height=800')
+                });
         }
 
         @Action('works/editWork')

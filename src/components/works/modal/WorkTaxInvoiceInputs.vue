@@ -4,7 +4,7 @@
             <v-autocomplete :items="fileTypes"
                             :rules="rules.fileTypes"
                             label="סוג"
-                            v-model="selectedFileType"
+                            v-model="invoiceReceiptFileData.type"
             ></v-autocomplete>
         </v-col>
         <v-col cols="12" md="3" sm="6">
@@ -12,14 +12,18 @@
                           label="מספר מזהה"
                           required
                           type="number"
-                          v-model="invoiceNumber"
+                          v-model="invoiceReceiptFileData.number"
             ></v-text-field>
         </v-col>
         <v-col cols="12" md="6" sm="12">
             <v-file-input :rules="rules.fileRequired"
+                          :placeholder="invoiceReceiptFileData.name"
+                          accept=".pdf"
                           @change="uploadFile"
                           label="קובץ חשבונית/קבלה"
+                          dense
                           outlined
+                          truncate-length="20"
             ></v-file-input>
         </v-col>
     </v-row>
@@ -29,6 +33,8 @@
     import {Component, Vue} from "vue-property-decorator";
     import {namespace} from 'vuex-class';
     import WorkCard from "@/utils/workCard/WorkCard";
+    import InvoiceReceiptFileService from "@/utils/invoiceReceiptFile/invoiceReceiptFile.service";
+    import InvoiceReceiptFileInterface from "@/utils/invoiceReceiptFile/invoiceReceiptFile.interface";
 
     const works = namespace('works');
 
@@ -36,23 +42,12 @@
     export default class WorkTaxInvoiceInput extends Vue {
         @works.State
         public modalWorkCard!: WorkCard;
-        public invoiceNumber!: string;
-        public selectedFileType!: string;
+        public invoiceReceiptFileData!: InvoiceReceiptFileInterface;
         public fileTypes!: Array<{ text: string; value: string }>;
 
         created(): void {
-            this.fileTypes = [
-                {
-                    text: 'קבלה',
-                    value: 'Receipt'
-                },
-                {
-                    text: 'חשבונית',
-                    value: 'invoice'
-                }
-            ];
-            this.invoiceNumber = this.workCard.taxInvoice;
-            this.selectedFileType = this.workCard.taxInvoice;
+            this.fileTypes = InvoiceReceiptFileService.types;
+            this.invoiceReceiptFileData = InvoiceReceiptFileService.getInvRecFileByLink(this.workCard.invoiceReceiptLink);
         }
 
         get workCard() {
@@ -74,8 +69,19 @@
             };
         }
 
-        public uploadFile(files: File) {
-            console.log('uploadFile', files);
+        @works.Action
+        public uploadInvoiceReceipt!: (payload: { data: InvoiceReceiptFileInterface; file: File }) => Promise;
+
+        public uploadFile(file: File) {
+            if (file) {
+                this.uploadInvoiceReceipt({
+                    data: this.invoiceReceiptFileData,
+                    file
+                }).then((snapshot) => {
+                    console.log(file.name + ' Uploaded!');
+                    this.workCard.invoiceReceiptLink = snapshot.metadata.fullPath;
+                });
+            }
         }
     }
 </script>

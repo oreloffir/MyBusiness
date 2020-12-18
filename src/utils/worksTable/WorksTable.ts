@@ -93,7 +93,7 @@ export default class WorksTable {
                 },
             },
             {text: 'הערות', value: 'notes', sortable: false},
-            {text: 'פעולות', value: 'actions', sortable: false, width: 100},
+            {text: 'פעולות', value: 'actions', sortable: false, width: 105},
         ];
     }
 }

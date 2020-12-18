@@ -6,6 +6,9 @@ import DBConnector from "@/utils/firebase/DBConnector";
 import {Action, Module, Mutation, VuexModule} from 'vuex-module-decorators'
 import firebase from "firebase"
 import DataSnapshot = firebase.database.DataSnapshot;
+import StorageConnector from "@/utils/firebase/StorageConnector";
+import InvoiceReceiptFileInterface from "@/utils/invoiceReceiptFile/invoiceReceiptFile.interface";
+import InvoiceReceiptFileEnum from "@/utils/invoiceReceiptFile/invoiceReceiptFile.enum";
 // import worksData from "../../ExcelWorks.json";
 
 Vue.use(Vuex);
@@ -56,6 +59,24 @@ class Works extends VuexModule {
         //
         //     this.context.dispatch('updateWork', new WorkCard(workData))
         // })
+    }
+
+    @Action
+    uploadInvoiceReceipt(payload: { data: InvoiceReceiptFileInterface; file: File }) {
+        const {type, number} = payload.data;
+
+        switch (type) {
+            case InvoiceReceiptFileEnum.RECEIPT:
+                return StorageConnector.filesCollection
+                    .child(`receipts/${type.toLowerCase()}${number}.pdf`)
+                    .put(payload.file);
+            case InvoiceReceiptFileEnum.INVOICE:
+                return StorageConnector.filesCollection
+                    .child(`invoices/${type.toLowerCase()}${number}.pdf`)
+                    .put(payload.file);
+            default:
+                console.error('Invalid file type')
+        }
     }
 
     @Action
