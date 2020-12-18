@@ -1,21 +1,23 @@
 <template>
     <v-row>
-        <v-col cols="12" sm="1">
-            <v-checkbox v-model="workCard.paid"
-            ></v-checkbox>
-        </v-col>
-        <v-col cols="12" sm="5">
+        <v-col cols="12" sm="4">
             <v-text-field label="שולם"
                           required
                           v-model="workCard.paidSum"
             ></v-text-field>
         </v-col>
-        <v-col cols="12" sm="6">
+        <v-col cols="12" sm="4">
             <v-autocomplete :items="paymentSelectItems"
                             label="אמצעי תשלום"
                             single
                             v-model="workCard.paymentInstrument"
             ></v-autocomplete>
+        </v-col>
+        <v-col cols="12" sm="4">
+            <v-switch :label="workPaidLabel"
+                      color="success"
+                      v-model="workCard.paid"
+            ></v-switch>
         </v-col>
     </v-row>
 </template>
@@ -42,6 +44,10 @@
             this.paymentSelectItems = PaymentInstrumentService.paymentInstruments.map(instrument => {
                 return {value: instrument.value, text: instrument.fullText};
             });
+        }
+
+        get workPaidLabel() {
+            return 'כרטיס ' + (this.workCard.paid ? 'סגור' : 'פתוח');
         }
 
         get workCard() {

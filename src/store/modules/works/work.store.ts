@@ -71,7 +71,6 @@ class Works extends VuexModule {
             return workCard.id === workData.id;
         }).pop();
 
-
         DBConnector.worksCollection.child(String(workData.id)).update(workData.firebaseObject).then(() => {
             if (existingWorkCard) {
                 this.context.commit('setUpdateWork', workData);

@@ -1,8 +1,12 @@
 <template>
     <div class="rowActionsWrapper">
+        <!--Tax invoice link icon-->
+        <a :href="workCard.taxInvoice" v-if="workCard.taxInvoice">
+            <v-icon>mdi-notebook-check</v-icon>
+        </a>
+        <!--Edit work icon-->
         <v-icon @click="edit">mdi-briefcase-edit</v-icon>
-
-
+        <!--Delete work icon + modal-->
         <v-dialog
                 max-width="300"
                 persistent
@@ -75,5 +79,7 @@
 </script>
 
 <style scoped>
-
+    a {
+        text-decoration: none;
+    }
 </style>

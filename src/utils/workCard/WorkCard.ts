@@ -19,6 +19,7 @@ export default class WorkCard {
     public paid?: boolean;
     public paymentInstrument?: PaymentInstrumentEnum;
     public notes?: string;
+    public taxInvoice?: string;
 
     constructor(data: WorkCardDTO
     ) {
@@ -38,6 +39,7 @@ export default class WorkCard {
         this.paid = data.paid;
         this.paymentInstrument = PaymentInstrumentService.enum(data.paymentInstrument) || PaymentInstrumentEnum.WAITING_FOR_PAYMENT;
         this.notes = data.notes;
+        this.taxInvoice = data.taxInvoice;
     }
 
     get dateString() {
@@ -79,6 +81,7 @@ export default class WorkCard {
             paid: this.paid ? this.paid : null,
             paymentInstrument: this.paymentInstrument ? this.paymentInstrument : null,
             notes: this.notes ? this.notes : null,
+            taxInvoice: this.taxInvoice ? this.taxInvoice : null,
         };
     }
 }

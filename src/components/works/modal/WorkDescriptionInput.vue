@@ -1,12 +1,14 @@
 <template>
-    <v-col cols="12" md="12" sm="12">
-        <v-text-field hint="תיקון, טיפול, חילוץ"
-                      label="תיאור"
-                      persistent-hint
-                      required
-                      v-model="workCard.description"
-        ></v-text-field>
-    </v-col>
+    <v-row>
+        <v-col cols="12" md="12" sm="12">
+            <v-text-field hint="תיקון, טיפול, חילוץ"
+                          label="תיאור"
+                          persistent-hint
+                          required
+                          v-model="workCard.description"
+            ></v-text-field>
+        </v-col>
+    </v-row>
 </template>
 
 <script lang="ts">

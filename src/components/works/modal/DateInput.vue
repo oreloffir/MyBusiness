@@ -1,29 +1,31 @@
 <template>
-    <v-col cols="12" lg="12">
-        <v-menu
-                :close-on-content-click="false"
-                max-width="290px"
-                min-width="290px"
-                transition="scale-transition"
-                v-model="dateMenu"
-        >
-            <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                        hint="פורמט DD/MM/YYYY"
-                        label="* תאריך"
-                        readonly
-                        v-bind="attrs"
-                        v-model="workCard.dateString"
-                        v-on="on"
-                ></v-text-field>
-            </template>
-            <v-date-picker
-                    @input="dateMenu = false"
-                    no-title
-                    v-model="date"
-            ></v-date-picker>
-        </v-menu>
-    </v-col>
+    <v-row>
+        <v-col cols="12" md="12" sm="12">
+            <v-menu
+                    :close-on-content-click="false"
+                    max-width="290px"
+                    min-width="290px"
+                    transition="scale-transition"
+                    v-model="dateMenu"
+            >
+                <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                            hint="פורמט DD/MM/YYYY"
+                            label="* תאריך"
+                            readonly
+                            v-bind="attrs"
+                            v-model="workCard.dateString"
+                            v-on="on"
+                    ></v-text-field>
+                </template>
+                <v-date-picker
+                        @input="dateMenu = false"
+                        no-title
+                        v-model="date"
+                ></v-date-picker>
+            </v-menu>
+        </v-col>
+    </v-row>
 </template>
 
 <script lang="ts">

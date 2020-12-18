@@ -1,9 +1,11 @@
 <template>
-    <v-col cols="12">
-        <v-text-field label="הערות"
-                      v-model="workCard.notes"
-        ></v-text-field>
-    </v-col>
+    <v-row>
+        <v-col cols="12" md="12" sm="12">
+            <v-text-field label="הערות"
+                          v-model="workCard.notes"
+            ></v-text-field>
+        </v-col>
+    </v-row>
 </template>
 
 <script lang="ts">

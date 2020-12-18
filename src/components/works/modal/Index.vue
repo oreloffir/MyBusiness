@@ -1,6 +1,6 @@
 <template>
     <div class="worksModalContainer">
-        <v-dialog max-width="600px"
+        <v-dialog class="dialog"
                   persistent
                   v-model="show"
         >
@@ -23,6 +23,9 @@
                             <work-description-input></work-description-input>
                             <work-price-inputs></work-price-inputs>
                             <work-payment-inputs></work-payment-inputs>
+                            <v-container v-show="workCard.paid">
+                                <work-tax-invoice-input></work-tax-invoice-input>
+                            </v-container>
                             <work-notes-input></work-notes-input>
                         </v-row>
                     </v-container>
@@ -57,6 +60,7 @@
     import WorkNotesInput from './WorkNotesInput'
     import WorkPriceInputs from './WorkPriceInputs'
     import WorkPaymentInputs from './WorkPaymentInputs'
+    import WorkTaxInvoiceInput from "./WorkTaxInvoiceInputs"
     import WorkDescriptionInput from './WorkDescriptionInput'
 
     export default {
@@ -67,31 +71,10 @@
                 default : false
             },
         },
-        data() {
-            return {
-                paymentSelectItems : [
-                    {
-                        value : "CHECK",
-                        text : "צ'ק"
-                    },
-                    {
-                        value : "CASH",
-                        text : "מזומן"
-                    },
-                    {
-                        value : "CREDIT_CARD",
-                        text : "כרטיס אשראי"
-                    },
-                    {
-                        value : "REMITTANCE",
-                        text : "העברה בנקאית"
-                    }
-                ]
-            }
-        },
         components : {
             // NewWorkButton,
             WorkDescriptionInput,
+            WorkTaxInvoiceInput,
             WorkPaymentInputs,
             WorkPriceInputs,
             WorkTimeInputs,
@@ -135,3 +118,14 @@
         }
     }
 </script>
+
+<style lang="scss">
+    .v-dialog {
+        max-width: 600px;
+
+        [class|=col] {
+            padding-top: 4px;
+            padding-bottom: unset;
+        }
+    }
+</style>
