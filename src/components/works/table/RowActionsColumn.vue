@@ -9,6 +9,13 @@
         >
             <v-icon>mdi-notebook-check</v-icon>
         </a>
+        <!--Image link icon-->
+        <a @click.prevent="openImage"
+           target="popup"
+           v-if="workCard.imageLink"
+        >
+            <v-icon>mdi-file-image-outline</v-icon>
+        </a>
         <!--Delete work icon + modal-->
         <v-dialog
                 max-width="300"
@@ -54,7 +61,6 @@
     import {Component, Prop, Vue} from "vue-property-decorator";
     import {Action} from "vuex-class"
     import WorkCard from "@/utils/workCard/WorkCard";
-    import StorageConnector from "@/utils/firebase/StorageConnector";
 
     @Component
     export default class TableRowActionsColumn extends Vue {
@@ -75,11 +81,11 @@
         }
 
         openInvoice() {
-            StorageConnector.storageCollection.ref(this.workCard.invoiceReceiptLink)
-                .getDownloadURL()
-                .then((url) => {
-                    window.open(url, 'name', 'width=750,height=800')
-                });
+            this.workCard.openInvoice();
+        }
+
+        openImage() {
+            this.workCard.openImage();
         }
 
         @Action('works/editWork')

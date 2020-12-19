@@ -16,4 +16,5 @@ export default interface WorkCardDTO {
     paymentInstrument?: string;
     notes?: string;
     invoiceReceiptLink?: string;
+    imageLink?: string;
 }

@@ -6,6 +6,10 @@ export default new class StorageConnector {
         return Firebase.storage.ref('files');
     }
 
+    get imagesCollection() {
+        return Firebase.storage.ref('images');
+    }
+
     get storageCollection() {
         return Firebase.storage;
     }

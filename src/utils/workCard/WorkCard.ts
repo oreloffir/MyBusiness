@@ -1,6 +1,8 @@
 import WorkCardDTO from './WorkCardDTO';
 import PaymentInstrumentEnum from "@/utils/paymentInstrument/paymentInstrument.enum";
 import PaymentInstrumentService from "@/utils/paymentInstrument/paymentInstrument.service";
+import StorageConnector from "@/utils/firebase/StorageConnector";
+import DBConnector from "@/utils/firebase/DBConnector";
 
 export default class WorkCard {
     public id: number;
@@ -20,6 +22,7 @@ export default class WorkCard {
     public paymentInstrument?: PaymentInstrumentEnum;
     public notes?: string;
     public invoiceReceiptLink?: string;
+    public imageLink?: string;
 
     constructor(data: WorkCardDTO
     ) {
@@ -40,6 +43,7 @@ export default class WorkCard {
         this.paymentInstrument = PaymentInstrumentService.enum(data.paymentInstrument) || PaymentInstrumentEnum.WAITING_FOR_PAYMENT;
         this.notes = data.notes;
         this.invoiceReceiptLink = data.invoiceReceiptLink;
+        this.imageLink = data.imageLink;
     }
 
     get dateString() {
@@ -82,6 +86,7 @@ export default class WorkCard {
             paymentInstrument: this.paymentInstrument ? this.paymentInstrument : null,
             notes: this.notes ? this.notes : null,
             invoiceReceiptLink: this.invoiceReceiptLink ? this.invoiceReceiptLink : null,
+            imageLink: this.imageLink ? this.imageLink : null,
         };
     }
 
@@ -103,9 +108,44 @@ export default class WorkCard {
             this.paid ? `שולם: ${this.paid ? 'כן' : 'לא'}\n` : '',
             this.paymentInstrument ? `אמצעי תשלום: ${PaymentInstrumentService.label(this.paymentInstrument)}\n` : '',
             this.notes ? `הערות: ${this.notes}\n` : '',
-            this.invoiceReceiptLink ? `לינק חשבונית/קבלה: ${this.invoiceReceiptLink}\n` : ''
+            this.invoiceReceiptLink ? `לינק חשבונית/קבלה: ${this.invoiceReceiptLink}\n` : '',
+            this.imageLink ? `לינק תמונה: ${this.imageLink}\n` : ''
         );
 
         return String(message);
+    }
+
+    public uploadImage(file: File) {
+        StorageConnector.imagesCollection
+            .child(`works/work-${this.id}-image.jpg`)
+            .put(file)
+            .then((snapshot) => {
+                this.imageLink = snapshot.metadata.fullPath;
+                this.save();
+            });
+    }
+
+    public openImage() {
+        StorageConnector.storageCollection.ref(this.imageLink)
+            .getDownloadURL()
+            .then((url) => {
+                window.open(url, 'name', 'width=650,height=700')
+            });
+    }
+
+    public openInvoice() {
+        StorageConnector.storageCollection.ref(this.invoiceReceiptLink)
+            .getDownloadURL()
+            .then((url) => {
+                window.open(url, 'name', 'width=750,height=800')
+            });
+    }
+
+    public save() {
+        DBConnector.worksCollection
+            .child(String(this.id))
+            .update(this.firebaseObject)
+            .then(() => alert("שמירה בוצעה בהצלחה\n"))
+            .catch((err: Error) => alert("שגיאה בזמן שמירה\n" + err));
     }
 }

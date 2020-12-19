@@ -1,6 +1,6 @@
 <template>
     <v-row>
-        <v-col cols="12" md="11" sm="11">
+        <v-col cols="12" md="4" sm="12">
             <v-menu
                     :close-on-content-click="false"
                     max-width="290px"
@@ -26,7 +26,7 @@
             </v-menu>
         </v-col>
 
-        <v-col cols="12" md="1" sm="1">
+        <v-col cols="12" md="1" offset-md="6" sm="1">
             <v-icon @click="copy"
                     color="primary"
                     large
@@ -34,6 +34,12 @@
             >
                 mdi-telegram
             </v-icon>
+        </v-col>
+        <v-col cols="12" md="1" sm="1">
+            <v-file-input @change="uploadImage"
+                          hide-input
+                          prepend-icon="mdi-camera-plus"
+            ></v-file-input>
         </v-col>
     </v-row>
 </template>
@@ -72,6 +78,10 @@
 
         copy() {
             navigator.clipboard.writeText(this.workCard.toString());
+        }
+
+        uploadImage(file: File) {
+            this.workCard.uploadImage(file);
         }
     }
 </script>
