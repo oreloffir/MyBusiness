@@ -84,4 +84,28 @@ export default class WorkCard {
             invoiceReceiptLink: this.invoiceReceiptLink ? this.invoiceReceiptLink : null,
         };
     }
+
+    public toString(): string {
+        const message = ''.concat(
+            this.id ? `מזהה: ${this.id}\n` : '',
+            this.date ? `תאריך: ${new Date(this.date).toLocaleDateString()}\n` : '',
+            this.contact ? `איש קשר: ${this.contact}\n` : '',
+            this.companyType ? `חברה: ${this.companyType}\n` : '',
+            this.licensePlate ? `לוחית רישוי: ${this.licensePlate}\n` : '',
+            this.workTime ? `זמן עבודה: ${this.workTime}\n` : '',
+            this.startWorkTime ? `שעת התחלה: ${this.startWorkTime}\n` : '',
+            this.endWorkTime ? `שעת סיום: ${this.endWorkTime}\n` : '',
+            this.description ? `תיאור: ${this.description}\n` : '',
+            this.workPrice ? `מחיר עבודה: ${this.workPrice}\n` : '',
+            this.partsPrice ? `מחיר חלקים: ${this.partsPrice}\n` : '',
+            this.partsCost ? `הוצאות: ${this.partsCost}\n` : '',
+            this.paidSum ? `סכום: ${this.paidSum}\n` : '',
+            this.paid ? `שולם: ${this.paid ? 'כן' : 'לא'}\n` : '',
+            this.paymentInstrument ? `אמצעי תשלום: ${PaymentInstrumentService.label(this.paymentInstrument)}\n` : '',
+            this.notes ? `הערות: ${this.notes}\n` : '',
+            this.invoiceReceiptLink ? `לינק חשבונית/קבלה: ${this.invoiceReceiptLink}\n` : ''
+        );
+
+        return String(message);
+    }
 }

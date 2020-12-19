@@ -35,6 +35,8 @@
     import WorkCard from "@/utils/workCard/WorkCard";
     import InvoiceReceiptFileService from "@/utils/invoiceReceiptFile/invoiceReceiptFile.service";
     import InvoiceReceiptFileInterface from "@/utils/invoiceReceiptFile/invoiceReceiptFile.interface";
+    import firebase from "firebase";
+    import UploadTask = firebase.storage.UploadTask;
 
     const works = namespace('works');
 

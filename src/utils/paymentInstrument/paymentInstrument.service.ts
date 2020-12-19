@@ -64,4 +64,11 @@ export default class PaymentInstrumentService {
             return instrument.value === value;
         }).pop();
     }
+
+    public static label(value: string): string | undefined {
+        const instrument = PaymentInstrumentService.instrument(value);
+
+        if (instrument)
+            return instrument.label;
+    }
 }

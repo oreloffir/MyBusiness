@@ -1,6 +1,6 @@
 <template>
     <v-row>
-        <v-col cols="12" md="12" sm="12">
+        <v-col cols="12" md="11" sm="11">
             <v-menu
                     :close-on-content-click="false"
                     max-width="290px"
@@ -24,6 +24,16 @@
                         v-model="date"
                 ></v-date-picker>
             </v-menu>
+        </v-col>
+
+        <v-col cols="12" md="1" sm="1">
+            <v-icon @click="copy"
+                    color="primary"
+                    large
+                    style="line-height: 2;"
+            >
+                mdi-telegram
+            </v-icon>
         </v-col>
     </v-row>
 </template>
@@ -58,6 +68,10 @@
 
         set date(value) {
             this.workCard.date = Date.parse(value);
+        }
+
+        copy() {
+            navigator.clipboard.writeText(this.workCard.toString());
         }
     }
 </script>
