@@ -1,6 +1,5 @@
 import InvoiceReceiptFileEnum from "@/utils/invoiceReceiptFile/invoiceReceiptFile.enum";
 import InvoiceReceiptFileInterface from "@/utils/invoiceReceiptFile/invoiceReceiptFile.interface";
-import StorageConnector from "@/utils/firebase/StorageConnector";
 
 export default class InvoiceReceiptFileService {
     public static get types(): Array<{ value: InvoiceReceiptFileEnum; text: string }> {
@@ -25,7 +24,7 @@ export default class InvoiceReceiptFileService {
         }
     }
 
-    static getInvRecFileByLink(link: string): InvoiceReceiptFileInterface {
+    static getInvRecFileByLink(link?: string): InvoiceReceiptFileInterface {
         if (!link)
             return {
                 type: undefined,

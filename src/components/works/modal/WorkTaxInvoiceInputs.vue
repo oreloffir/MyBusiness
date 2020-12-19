@@ -31,7 +31,7 @@
 
 <script lang="ts">
     import {Component, Vue} from "vue-property-decorator";
-    import {namespace} from 'vuex-class';
+    import {Action, namespace} from 'vuex-class';
     import WorkCard from "@/utils/workCard/WorkCard";
     import InvoiceReceiptFileService from "@/utils/invoiceReceiptFile/invoiceReceiptFile.service";
     import InvoiceReceiptFileInterface from "@/utils/invoiceReceiptFile/invoiceReceiptFile.interface";
@@ -69,15 +69,15 @@
             };
         }
 
-        @works.Action
-        public uploadInvoiceReceipt!: (payload: { data: InvoiceReceiptFileInterface; file: File }) => Promise;
+        @Action('works/uploadInvoiceReceipt')
+        public uploadInvoiceReceipt!: (payload: { data: InvoiceReceiptFileInterface; file: File }) => Promise<UploadTask>;
 
         public uploadFile(file: File) {
             if (file) {
                 this.uploadInvoiceReceipt({
                     data: this.invoiceReceiptFileData,
                     file
-                }).then((snapshot) => {
+                }).then((snapshot: any) => {
                     console.log(file.name + ' Uploaded!');
                     this.workCard.invoiceReceiptLink = snapshot.metadata.fullPath;
                 });
