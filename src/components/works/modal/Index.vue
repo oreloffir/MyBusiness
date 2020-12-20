@@ -5,7 +5,7 @@
                   v-model="show"
         >
             <template v-slot:activator="{ on, attr }">
-                <v-btn @click="add" class="mx-sm-4" v-bind="attr" v-on="on">
+                <v-btn @click="add" class="newWorkButton mx-sm-4" v-bind="attr" v-on="on">
                     <v-icon>mdi-plus</v-icon>
                     <span>הוסף עבודה חדשה</span>
                 </v-btn>
@@ -120,12 +120,18 @@
 </script>
 
 <style lang="scss">
-    .v-dialog {
-        max-width: 600px;
+    .worksModalContainer {
+        .newWorkButton {
+            position: absolute;
+        }
 
-        [class|=col] {
-            padding-top: 4px;
-            padding-bottom: unset;
+        .v-dialog {
+            max-width: 600px;
+
+            [class|=col] {
+                padding-top: 4px;
+                padding-bottom: unset;
+            }
         }
     }
 </style>

@@ -1,6 +1,7 @@
 <template>
     <v-select
             :items="monthFilterOptions"
+            class="mx-4"
             label="חודשים"
             multiple
             v-model="monthSelection"

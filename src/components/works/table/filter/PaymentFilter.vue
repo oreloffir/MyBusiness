@@ -1,5 +1,5 @@
 <template>
-    <v-chip-group column multiple v-model="paymentSelection">
+    <v-chip-group class="mx-4" column multiple v-model="paymentSelection">
         <v-chip :key="payment.value" filter outlined v-for="payment in paymentInstruments">
             <v-icon :color="payment.color + ' darken-2'" small>{{ payment.icon }}</v-icon>
             <span>{{ payment.label }}</span>

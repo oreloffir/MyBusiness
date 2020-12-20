@@ -1,10 +1,9 @@
 <template>
-    <div class="worksSummeryContainer float-left">
+    <div class="worksSummeryContainer">
         <v-card class="summeryCard"
-                elevation="2"
-                outlined
-                shaped
+                elevation="8"
                 v-show="show"
+                outlined
         >
             <v-row>
                 <v-col lg="3" md="6" sm="12"><span>עבודה</span></v-col>
@@ -87,18 +86,18 @@
 
 <style lang="scss">
     .worksSummeryContainer {
-        position: relative;
-        margin-left: 10px;
+        position: absolute;
+        top: 10px;
+        left: 10px;
 
         .summeryCard {
             z-index: 100;
             position: absolute;
-            top: -60px;
-            left: 105%;
+            left: 55px;
             min-width: 350px;
             padding: 5px;
+            font-weight: bold;
             background-color: rgba(33, 150, 243, 0.5);
         }
-
     }
 </style>
