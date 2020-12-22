@@ -1,10 +1,10 @@
 <template>
     <div class="worksModalContainer">
         <v-dialog class="dialog"
-                  persistent
                   v-model="show"
-        >
-            <template v-slot:activator="{ on, attr }">
+                  @click:outside="close"
+                  persistent>
+            <template #activator="{ on, attr }">
                 <v-btn @click="add" class="newWorkButton mx-sm-4" v-bind="attr" v-on="on">
                     <v-icon>mdi-plus</v-icon>
                     <span>הוסף עבודה חדשה</span>
@@ -12,7 +12,7 @@
             </template>
             <v-card>
                 <v-card-title>
-                    <span class="headline">הוסף עבודה חדשה</span>
+                    <span class="headline">כרטיס עבודה חדשה</span>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
@@ -23,9 +23,7 @@
                             <work-description-input></work-description-input>
                             <work-price-inputs></work-price-inputs>
                             <work-payment-inputs></work-payment-inputs>
-                            <v-container :key="workCard.id" v-show="workCard.paid">
-                                <work-tax-invoice-input></work-tax-invoice-input>
-                            </v-container>
+                            <work-tax-invoice-input :key="workCard.id" v-show="workCard.paid"></work-tax-invoice-input>
                             <work-notes-input></work-notes-input>
                         </v-row>
                     </v-container>
@@ -124,14 +122,14 @@
         .newWorkButton {
             position: absolute;
         }
+    }
 
-        .v-dialog {
-            max-width: 600px;
+    .v-dialog {
+        max-width: 600px;
 
-            [class|=col] {
-                padding-top: 4px;
-                padding-bottom: unset;
-            }
+        [class|=col] {
+            padding-top: 4px;
+            padding-bottom: unset;
         }
     }
 </style>

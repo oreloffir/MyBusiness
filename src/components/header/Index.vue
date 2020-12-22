@@ -3,7 +3,6 @@
         <div class="nav">
             <div class="linksWrapper">
                 <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
                 <router-link class="link" to="/">ראשי</router-link>
                 <router-link class="link" to="/works" v-if="isUserSignIn">עבודות</router-link>
                 <router-link class="link" to="/login" v-if="isUserSignIn">התנתק {{user && user.email}}</router-link>
@@ -12,7 +11,7 @@
             <div class="logoWrapper">
                 <img :src="require('../../assets/HeaderLogo.png')"
                      alt="App Logo"
-                     class="logo shrink mr-2">
+                     class="logo shrink">
             </div>
         </div>
     </v-app-bar>

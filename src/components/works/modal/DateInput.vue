@@ -1,14 +1,13 @@
 <template>
     <v-row>
         <v-col cols="12" md="4" sm="12">
-            <v-menu
+            <v-menu v-model="dateMenu"
                     :close-on-content-click="false"
                     max-width="290px"
                     min-width="290px"
                     transition="scale-transition"
-                    v-model="dateMenu"
             >
-                <template v-slot:activator="{ on, attrs }">
+                <template #activator="{ on, attrs }">
                     <v-text-field
                             hint="פורמט DD/MM/YYYY"
                             label="* תאריך"
