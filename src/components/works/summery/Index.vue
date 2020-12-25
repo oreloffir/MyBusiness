@@ -1,17 +1,16 @@
 <template>
     <div class="worksSummeryContainer">
-        <v-card class="summeryCard"
+        <v-card :class="['summeryCard', {show}]"
                 elevation="8"
-                v-show="show"
                 outlined
         >
-            <v-row>
+            <v-row class="underline">
                 <v-col lg="3" md="6" sm="12"><span>עבודה</span></v-col>
                 <v-col lg="3" md="6" sm="12"><span>חלקים</span></v-col>
                 <v-col lg="3" md="6" sm="12"><span>הוצאות</span></v-col>
                 <v-col lg="3" md="6" sm="12"><span>שולם</span></v-col>
             </v-row>
-            <v-row>
+            <v-row class="bold">
                 <v-col lg="3" md="6" sm="12"><span>{{ sumsMap.get('workPrice')}}</span></v-col>
                 <v-col lg="3" md="6" sm="12"><span>{{ sumsMap.get('partsPrice')}}</span></v-col>
                 <v-col lg="3" md="6" sm="12"><span>{{ sumsMap.get('partsCost')}}</span></v-col>
@@ -90,14 +89,29 @@
         top: 10px;
         left: 10px;
 
+        &:hover {
+            .summeryCard {
+                display: block;
+            }
+        }
+
         .summeryCard {
             z-index: 100;
             position: absolute;
+            display: none;
             left: 55px;
             min-width: 350px;
             padding: 5px;
-            font-weight: bold;
-            background-color: rgba(33, 150, 243, 0.5);
+            color: #fff;
+            background-color: rgba(33, 150, 243, 0.9);
+
+            .bold {
+                font-weight: bold;
+            }
+
+            .underline {
+                text-decoration: underline;
+            }
         }
     }
 </style>

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex';
+    import {mapActions, mapGetters, mapState} from 'vuex';
     import WorkCard from "../../../utils/workCard/WorkCard";
     import WorksTable from "../../../utils/worksTable/WorksTable";
     import TableTop from "./Top";
@@ -52,6 +52,12 @@
             TableRowActionsColumn
         },
         computed : {
+            ...mapState({
+                worksTable : state => state.works.worksTable,
+            }),
+            ...mapGetters({
+                worksDisplayed : 'works/worksDisplayed'
+            }),
             works() {
                 if (!this.table)
                     return [];
@@ -102,7 +108,7 @@
                 if (!this.table)
                     return;
 
-                this.table.displayedWorks = items;
+                this.worksTable.displayedWorks = items;
             }
         },
     }

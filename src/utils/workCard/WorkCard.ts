@@ -92,7 +92,7 @@ export default class WorkCard {
 
     public toString(): string {
         const message = ''.concat(
-            this.id ? `מזהה: ${this.id}\n` : '',
+            this.id ? `** כרטיס עבודה מס: ${this.id}**\n` : '',
             this.date ? `תאריך: ${new Date(this.date).toLocaleDateString()}\n` : '',
             this.contact ? `איש קשר: ${this.contact}\n` : '',
             this.companyType ? `חברה: ${this.companyType}\n` : '',

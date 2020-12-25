@@ -1,4 +1,5 @@
 import WorkCard from "../workCard/WorkCard";
+import Vue from "vue";
 
 interface FiltersInterface {
     date: {
@@ -44,7 +45,7 @@ export default class WorksTable {
     }
 
     set displayedWorks(val) {
-        this.displayed = val;
+        Vue.set(this, 'displayed', val);
     }
 
     get dateFilter() {
