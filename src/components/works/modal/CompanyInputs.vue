@@ -35,7 +35,7 @@
         public modalWorkCard!: WorkCard;
 
         @works.Getter
-        public companies: Array;
+        public companies: Array<string>;
 
         constructor() {
             super();
