@@ -38,6 +38,10 @@ class Works extends VuexModule {
         });
     }
 
+    get companies() {
+        return this.worksData ? this.worksData.map(work => work.contact).sort() : [];
+    }
+
     @Action
     initialize() {
         DBConnector.worksCollection.once('value', (snap: DataSnapshot) => {

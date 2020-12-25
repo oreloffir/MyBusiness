@@ -6,11 +6,11 @@
             ></v-text-field>
         </v-col>
         <v-col cols="12" md="4" sm="6">
-            <v-autocomplete :input="companyType"
-                            :items="['פרטי','יזמות','צבע ארגמן']"
-                            label="* חברה"
-                            v-model="companyType"
-            ></v-autocomplete>
+            <v-combobox :input="companyType"
+                        :items="companies"
+                        label="* חברה"
+                        v-model="companyType"
+            ></v-combobox>
         </v-col>
         <v-col cols="12" md="4" sm="6">
             <v-text-field label="* לוחית רישוי"
@@ -33,6 +33,9 @@
     export default class CompanyInputs extends Vue {
         @works.State
         public modalWorkCard!: WorkCard;
+
+        @works.Getter
+        public companies: Array;
 
         constructor() {
             super();
