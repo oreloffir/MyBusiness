@@ -12,23 +12,16 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import {namespace} from 'vuex-class';
+    import {Component, Prop, Vue} from "vue-property-decorator";
     import WorkCard from "@/utils/workCard/WorkCard";
-
-    const works = namespace('works');
 
     @Component
     export default class WorkDescriptionInput extends Vue {
-        @works.State
-        public modalWorkCard!: WorkCard;
+        @Prop({required: true})
+        public readonly workCard: WorkCard;
 
         constructor() {
             super();
-        }
-
-        get workCard() {
-            return this.modalWorkCard;
         }
     }
 </script>

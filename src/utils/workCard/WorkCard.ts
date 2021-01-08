@@ -46,6 +46,10 @@ export default class WorkCard {
         this.imageLink = data.imageLink;
     }
 
+    get sumPrice() {
+        return (this.workPrice ? parseInt(String(this.workPrice)) : 0) + (this.partsPrice ? parseInt(String(this.partsPrice)) : 0);
+    }
+
     get dateString() {
         const tempDate = new Date(this.date);
 

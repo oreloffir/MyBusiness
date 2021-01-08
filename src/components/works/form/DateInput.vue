@@ -25,7 +25,7 @@
             </v-menu>
         </v-col>
 
-        <v-col cols="12" md="1" offset-md="6" sm="1">
+        <v-col md="1" offset-md="6" sm="1">
             <v-icon @click="copy"
                     color="primary"
                     large
@@ -34,7 +34,7 @@
                 mdi-telegram
             </v-icon>
         </v-col>
-        <v-col cols="12" md="1" sm="1">
+        <v-col md="1" sm="1">
             <v-file-input @change="uploadImage"
                           hide-input
                           prepend-icon="mdi-camera-plus"
@@ -44,24 +44,17 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import {namespace} from 'vuex-class';
+    import {Component, Vue, Prop} from "vue-property-decorator";
     import WorkCard from "@/utils/workCard/WorkCard";
-
-    const works = namespace('works');
 
     @Component
     export default class DateInput extends Vue {
-        @works.State
-        public modalWorkCard!: WorkCard;
+        @Prop({required: true})
+        public readonly workCard: WorkCard;
         public dateMenu = false;
 
         constructor() {
             super();
-        }
-
-        get workCard() {
-            return this.modalWorkCard;
         }
 
         get date() {

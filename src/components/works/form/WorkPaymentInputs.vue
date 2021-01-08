@@ -23,17 +23,14 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import {namespace} from 'vuex-class';
+    import {Component, Prop, Vue} from "vue-property-decorator";
     import WorkCard from "@/utils/workCard/WorkCard";
     import PaymentInstrumentService from "@/utils/paymentInstrument/paymentInstrument.service";
 
-    const works = namespace('works');
-
     @Component
     export default class WorkPaymentInputs extends Vue {
-        @works.State
-        public modalWorkCard!: WorkCard;
+        @Prop({required: true})
+        public readonly workCard: WorkCard;
         public paymentSelectItems !: Array<{ value: string; text: string }>;
 
         created() {
@@ -48,10 +45,6 @@
 
         get workPaidLabel() {
             return 'כרטיס ' + (this.workCard.paid ? 'סגור' : 'פתוח');
-        }
-
-        get workCard() {
-            return this.modalWorkCard;
         }
     }
 </script>

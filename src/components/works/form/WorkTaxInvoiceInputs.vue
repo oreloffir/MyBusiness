@@ -30,30 +30,24 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import {Action, namespace} from 'vuex-class';
+    import {Component, Prop, Vue} from "vue-property-decorator";
+    import {Action} from 'vuex-class';
     import WorkCard from "@/utils/workCard/WorkCard";
     import InvoiceReceiptFileService from "@/utils/invoiceReceiptFile/invoiceReceiptFile.service";
     import InvoiceReceiptFileInterface from "@/utils/invoiceReceiptFile/invoiceReceiptFile.interface";
     import firebase from "firebase";
     import UploadTask = firebase.storage.UploadTask;
 
-    const works = namespace('works');
-
     @Component
     export default class WorkTaxInvoiceInput extends Vue {
-        @works.State
-        public modalWorkCard!: WorkCard;
+        @Prop({required: true})
+        public readonly workCard: WorkCard;
         public invoiceReceiptFileData!: InvoiceReceiptFileInterface;
         public fileTypes!: Array<{ text: string; value: string }>;
 
         created(): void {
             this.fileTypes = InvoiceReceiptFileService.types;
             this.invoiceReceiptFileData = InvoiceReceiptFileService.getInvRecFileByLink(this.workCard.invoiceReceiptLink);
-        }
-
-        get workCard() {
-            return this.modalWorkCard;
         }
 
         get rules() {

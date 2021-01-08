@@ -77,11 +77,11 @@ export default class WorksTable {
             },
             {text: 'לקוח', value: 'companyType'},
             {text: 'לוחית רישוי', value: 'licensePlate', width: 112},
-            {text: 'שעות עבודה', value: 'workTime'},
+            // {text: 'שעות עבודה', value: 'workTime'},
             {text: 'תיאור עבודה', value: 'description', width: 350, height: 100},
-            {text: 'מחיר עבודה', value: 'workPrice'},
-            {text: 'מחיר חלקים', value: 'partsPrice'},
-            {text: 'הוצאות', value: 'partsCost'},
+            {text: 'מחיר עבודה', value: 'sumPrice'},
+            // {text: 'מחיר חלקים', value: 'partsPrice'},
+            // {text: 'הוצאות', value: 'partsCost'},
             {text: 'שולם', value: 'paidSum'},
             {
                 text: 'אמצעי תשלום',
@@ -94,7 +94,7 @@ export default class WorksTable {
                 },
             },
             {text: 'הערות', value: 'notes', sortable: false},
-            {text: 'פעולות', value: 'actions', sortable: false, width: 105},
+            // {text: 'פעולות', value: 'actions', sortable: false, width: 105},
         ];
     }
 }

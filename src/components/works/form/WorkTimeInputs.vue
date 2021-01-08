@@ -1,9 +1,10 @@
 <template>
     <v-row class="workTimeInputsContainer">
         <v-col cols="12" md="4" sm="6">
-            <v-text-field label="שעות עבודה"
-                          type="number"
-                          v-model="workCard.workTime"
+            <v-text-field
+                    label="שעות עבודה"
+                    type="number"
+                    v-model="workCard.workTime"
             ></v-text-field>
         </v-col>
         <v-col cols="12" md="4" sm="6">
@@ -27,11 +28,11 @@
                     ></v-text-field>
                 </template>
                 <v-time-picker
-                        @click:minute="$refs.startTimeMenu.save(startWorkTime)"
+                        @click:minute="$refs.startTimeMenu.save(workCard.startWorkTime)"
                         format="24hr"
                         full-width
                         v-if="startTimeMenu"
-                        v-model="startWorkTime"
+                        v-model="workCard.startWorkTime"
                 ></v-time-picker>
             </v-menu>
         </v-col>
@@ -47,7 +48,7 @@
             >
                 <template v-slot:activator="{ on, attrs }">
                     <v-text-field
-                            label="שעת התחלה"
+                            label="שעת סיום"
                             prepend-icon="mdi-clock-time-four-outline"
                             readonly
                             v-bind="attrs"
@@ -56,11 +57,11 @@
                     ></v-text-field>
                 </template>
                 <v-time-picker
-                        @click:minute="$refs.endTimeMenu.save(endWorkTime)"
+                        @click:minute="$refs.endTimeMenu.save(workCard.endWorkTime)"
                         format="24hr"
                         full-width
                         v-if="endTimeMenu"
-                        v-model="endWorkTime"
+                        v-model="workCard.endWorkTime"
                 ></v-time-picker>
             </v-menu>
         </v-col>
@@ -68,45 +69,16 @@
 </template>
 
 <script lang="ts">
-    import {Component, Vue} from "vue-property-decorator";
-    import {namespace} from 'vuex-class';
+    import {Component, Prop, Vue} from "vue-property-decorator";
     import WorkCard from "@/utils/workCard/WorkCard";
-
-    const works = namespace('works');
 
     @Component
     export default class WorkTimeInputs extends Vue {
-        @works.State
-        public modalWorkCard!: WorkCard;
+        @Prop({required: true})
+        public readonly workCard: WorkCard;
         public startTimeMenu = false;
         public endTimeMenu = false;
-
-        get workCard() {
-            return this.modalWorkCard;
-        }
-
-        get startWorkTime() {
-            if (this.workCard && this.workCard.startWorkTime)
-                return this.workCard.startWorkTime;
-            return '';
-        }
-
-        set startWorkTime(value) {
-            this.workCard.startWorkTime = value;
-        }
-
-        get endWorkTime() {
-            if (this.workCard && this.workCard.endWorkTime)
-                return this.workCard.endWorkTime;
-            return undefined;
-        }
-
-        set endWorkTime(value) {
-            this.workCard.endWorkTime = value;
-        }
     }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

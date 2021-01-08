@@ -1,21 +1,5 @@
 <template>
     <div class="rowActionsWrapper">
-        <!--Edit work icon-->
-        <v-icon @click="edit">mdi-briefcase-edit</v-icon>
-        <!--Tax invoice link icon-->
-        <a @click.prevent="openInvoice"
-           target="popup"
-           v-if="workCard.invoiceReceiptLink"
-        >
-            <v-icon>mdi-notebook-check</v-icon>
-        </a>
-        <!--Image link icon-->
-        <a @click.prevent="openImage"
-           target="popup"
-           v-if="workCard.imageLink"
-        >
-            <v-icon>mdi-file-image-outline</v-icon>
-        </a>
         <!--Delete work icon + modal-->
         <v-dialog
                 max-width="300"
@@ -23,11 +7,13 @@
                 v-model="removeDialog"
         >
             <template v-slot:activator="{ on, attrs }">
-                <v-icon
-                        v-bind="attrs"
-                        v-on="on"
-                >mdi-delete-circle
-                </v-icon>
+                <v-btn color="error"
+                       v-bind="attrs"
+                       v-on="on"
+                >
+                    <v-icon color="white">mdi-delete-circle</v-icon>
+                    מחיקה
+                </v-btn>
             </template>
             <v-card>
                 <v-card-title class="headline"
@@ -51,9 +37,38 @@
                     >
                         Delete
                     </v-btn>
+
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <!--Tax invoice link icon-->
+        <v-btn v-if="workCard.invoiceReceiptLink">
+            <a @click.prevent="openInvoice"
+               color="blue darken-1"
+               target="popup"
+            >
+                <v-icon>mdi-notebook-check</v-icon>
+                חשבונית מס
+            </a>
+        </v-btn>
+
+        <!--Image link icon-->
+        <v-btn v-if="workCard.imageLink">
+            <a @click.prevent="openImage"
+               target="popup"
+            >
+                <v-icon>mdi-file-image-outline</v-icon>
+                תמונה
+            </a>
+        </v-btn>
+
+        <!--Update work button-->
+        <v-btn color="green"
+               @click="save(item)">
+            <v-icon>mdi-briefcase-edit</v-icon>
+            שמור
+        </v-btn>
     </div>
 </template>
 
@@ -64,7 +79,8 @@
 
     @Component
     export default class TableRowActionsColumn extends Vue {
-        @Prop({required: true}) readonly workCard: WorkCard;
+        @Prop({required: true})
+        public readonly workCard: WorkCard;
         removeDialog: boolean;
 
         constructor() {
@@ -73,7 +89,7 @@
         }
 
         edit() {
-            this.editWork(this.workCard);
+            this.updateWork(this.workCard);
         }
 
         remove() {
@@ -88,16 +104,25 @@
             this.workCard.openImage();
         }
 
-        @Action('works/editWork')
-        editWork!: (workCard: WorkCard) => void;
+        @Action('works/updateWork')
+        updateWork!: (workCard: WorkCard) => void;
 
         @Action('works/deleteWork')
         deleteWork!: (workCard: WorkCard) => void;
     }
 </script>
 
-<style scoped>
-    a {
-        text-decoration: none;
+<style lang="scss" scoped>
+    .rowActionsWrapper {
+        width: 100%;
+        text-align: left;
+
+        .v-btn {
+            margin-right: 10px;
+
+            a {
+                text-decoration: none;
+            }
+        }
     }
 </style>

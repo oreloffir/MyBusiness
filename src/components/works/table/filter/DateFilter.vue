@@ -37,6 +37,7 @@
             {value: '10/20', label: 'אוקטובר 20'},
             {value: '11/20', label: 'נובמבר 20'},
             {value: '12/20', label: 'דצמבר 20'},
+            {value: '01/21', label: 'ינואר 21'},
         ];
 
         constructor() {
