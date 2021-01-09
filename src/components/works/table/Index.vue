@@ -1,5 +1,5 @@
 <template>
-  <div class="worksTableContainer" ref="worksTableContainer">
+  <div :class="className" ref="worksTableContainer">
     <v-data-table
       item-key="id"
       :items="works"
@@ -12,7 +12,10 @@
       show-expand
     >
       <template v-slot:top>
-        <table-top />
+        <table-top
+          @toggleFilterMenu="toggleFilterMenu"
+          @openNewWorkModal="openNewWorkModal"
+        />
       </template>
       <template v-slot:item.date="{ item }">
         <table-date-column :workCard="item" />
@@ -36,7 +39,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from "vuex";
+import { mapState } from "vuex";
 import WorkCard from "../../../utils/workCard/WorkCard";
 import WorksTable from "../../../utils/worksTable/WorksTable";
 import TableTop from "./Top";
@@ -53,7 +56,9 @@ export default {
     }
   },
   data() {
-    return {};
+    return {
+      filterMenuOpened: false
+    };
   },
   components: {
     TableTop,
@@ -66,9 +71,14 @@ export default {
     ...mapState({
       worksTable: state => state.works.worksTable
     }),
-    ...mapGetters({
-      worksDisplayed: "works/worksDisplayed"
-    }),
+    className() {
+      return [
+        "worksTableContainer",
+        {
+          filterMenuOpened: this.filterMenuOpened
+        }
+      ];
+    },
     works() {
       if (!this.table) return [];
 
@@ -93,6 +103,12 @@ export default {
     }
   },
   methods: {
+    toggleFilterMenu(val) {
+      this.filterMenuOpened = val;
+    },
+    openNewWorkModal() {
+      this.$emit("openNewWorkModal");
+    },
     searchFilter(value, search) {
       return (
         value != null &&
@@ -129,8 +145,14 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .worksTableContainer {
+  &.filterMenuOpened {
+    table {
+      padding-right: 250px !important;
+    }
+  }
+
   .workFormContainer {
     padding: 20px 0;
 

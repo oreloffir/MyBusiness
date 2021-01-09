@@ -1,17 +1,6 @@
 <template>
     <div class="worksModalContainer">
         <v-dialog class="dialog" v-model="show" @click:outside="close" persistent>
-            <template #activator="{ on, attr }">
-                <v-btn
-                        @click="add"
-                        class="newWorkButton mx-sm-4"
-                        v-bind="attr"
-                        v-on="on"
-                >
-                    <v-icon>mdi-plus</v-icon>
-                    <span>הוסף עבודה חדשה</span>
-                </v-btn>
-            </template>
             <WorkForm :work="workCard">
                 <template #actions>
                     <v-card-actions>

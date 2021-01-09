@@ -87,6 +87,7 @@ class Works extends VuexModule {
     newWork() {
         if (this.modalWorkCard) {
             this.context.commit('resetModalWorkCard', this.context.getters['emptyWorkCard']);
+            this.context.commit('setShowModal', true);
         }
     }
 

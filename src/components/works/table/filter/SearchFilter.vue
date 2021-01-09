@@ -1,7 +1,7 @@
 <template>
     <v-text-field
             :input="search"
-            class="mx-4"
+            class="searchInput"
             label="חיפוש"
             v-model="search"
     ></v-text-field>
@@ -40,3 +40,10 @@
         }
     }
 </script>
+
+<style>
+    .searchInput{
+        display: inline-block;
+        max-width: 150px;
+    }
+</style>
