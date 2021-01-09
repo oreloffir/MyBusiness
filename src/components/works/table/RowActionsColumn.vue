@@ -65,7 +65,7 @@
 
         <!--Update work button-->
         <v-btn color="green"
-               @click="save(item)">
+               @click="edit">
             <v-icon>mdi-briefcase-edit</v-icon>
             שמור
         </v-btn>
@@ -89,7 +89,9 @@
         }
 
         edit() {
+            console.log(this.workCard);
             this.updateWork(this.workCard);
+            this.$emit('collapseExpended')
         }
 
         remove() {

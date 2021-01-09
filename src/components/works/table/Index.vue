@@ -8,8 +8,9 @@
       :fixed-header="true"
       :height="tableHeight"
       :footer-props="{ 'items-per-page-options': [50, 250, 500, -1] }"
-      @current-items="setDisplayedWorks"
+      :expanded.sync="expanded"
       show-expand
+      @current-items="setDisplayedWorks"
     >
       <template v-slot:top>
         <table-top class="tableTop"
@@ -28,7 +29,7 @@
           <WorkForm :work="item">
             <template #actions>
               <v-card-actions>
-                <RowActionsColumn :workCard="item"></RowActionsColumn>
+                <RowActionsColumn :workCard="item" @collapseExpended="collapseExpended"></RowActionsColumn>
               </v-card-actions>
             </template>
           </WorkForm>
@@ -57,7 +58,8 @@ export default {
   },
   data() {
     return {
-      filterMenuOpened: false
+      filterMenuOpened: false,
+      expanded: []
     };
   },
   components: {
@@ -103,6 +105,9 @@ export default {
     }
   },
   methods: {
+    collapseExpended() {
+      this.expanded = [];
+    },
     toggleFilterMenu(val) {
       this.filterMenuOpened = val;
     },

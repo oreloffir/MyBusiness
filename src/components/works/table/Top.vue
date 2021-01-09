@@ -21,7 +21,6 @@
         <v-card class="filterMenu" v-show="menuOpen">
             <date-filter></date-filter>
             <payment-filter></payment-filter>
-
         </v-card>
         <summery></summery>
     </div>
@@ -49,7 +48,6 @@
 
         constructor() {
             super();
-            console.log('Table top', this.menuOpen);
         }
 
         public toggleFilterMenu() {
