@@ -12,7 +12,7 @@
       show-expand
     >
       <template v-slot:top>
-        <table-top
+        <table-top class="tableTop"
           @toggleFilterMenu="toggleFilterMenu"
           @openNewWorkModal="openNewWorkModal"
         />
@@ -99,7 +99,7 @@ export default {
       }
     },
     tableHeight() {
-      return document.body.clientHeight - 255;
+      return document.body.clientHeight - 195;
     }
   },
   methods: {
@@ -158,6 +158,10 @@ export default {
 
     .v-card.v-sheet {
       box-shadow: unset;
+
+      [class*="col-"] {
+        padding: 0 8px;
+      }
     }
   }
 }

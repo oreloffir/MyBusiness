@@ -1,36 +1,30 @@
 <template>
-    <v-row>
-        <v-col cols="12" lg="3" md="3" sm="12">
-            <v-btn @click="openNewWorkModal"
-                   icon
-                   x-large
-            >
-                <v-icon color="teal darken-1" large>
-                    mdi-newspaper-plus
-                </v-icon>
-            </v-btn>
-            <v-btn @click="toggleFilterMenu"
-                   icon
-                   x-large
-            >
-                <v-icon color="light-blue darken-2"
-                        large>mdi-filter-menu</v-icon>
-            </v-btn>
-            <search-filter></search-filter>
-        </v-col>
+    <div>
+
+        <v-btn @click="openNewWorkModal"
+               icon
+               x-large
+        >
+            <v-icon color="teal darken-1" large>
+                mdi-newspaper-plus
+            </v-icon>
+        </v-btn>
+        <v-btn @click="toggleFilterMenu"
+               icon
+               x-large
+        >
+            <v-icon color="light-blue darken-2"
+                    large>mdi-filter-menu
+            </v-icon>
+        </v-btn>
+        <search-filter></search-filter>
         <v-card class="filterMenu" v-show="menuOpen">
             <date-filter></date-filter>
             <payment-filter></payment-filter>
 
         </v-card>
-        <v-col cols="12" lg="4" md="6" sm="12">
-        </v-col>
-        <v-col cols="12" lg="4" md="8" sm="12">
-        </v-col>
-        <v-col cols="12" lg="2" md="4" sm="12">
-            <summery></summery>
-        </v-col>
-    </v-row>
+        <summery></summery>
+    </div>
 </template>
 
 <script lang="ts">
@@ -58,18 +52,18 @@
             console.log('Table top', this.menuOpen);
         }
 
-        public toggleFilterMenu(){
-            this.menuOpen =!this.menuOpen;
+        public toggleFilterMenu() {
+            this.menuOpen = !this.menuOpen;
             this.$emit('toggleFilterMenu', this.menuOpen);
         }
 
-        public openNewWorkModal(){
-            this.$emit('openNewWorkModal',true);
+        public openNewWorkModal() {
+            this.$emit('openNewWorkModal', true);
         }
     }
 </script>
 <style>
-    .filterMenu{
+    .filterMenu {
         z-index: 10;
         top: 120px;
         right: 0;
