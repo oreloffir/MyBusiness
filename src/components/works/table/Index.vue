@@ -18,6 +18,12 @@
           @openNewWorkModal="openNewWorkModal"
         />
       </template>
+      <template v-slot:item.description="{ item }">
+        {{  ellipsis(item.description) }}
+      </template>
+      <template v-slot:item.notes="{ item }">
+        {{  ellipsis(item.notes) }}
+      </template>
       <template v-slot:item.date="{ item }">
         <table-date-column :workCard="item" />
       </template>
@@ -134,6 +140,9 @@ export default {
           .toLocaleUpperCase()
           .indexOf(search) !== -1
       );
+    },
+    ellipsis(str = '', n = 90){
+      return (str.length > n) ? str.substr(0, n-1) + '…' : str;
     },
     dateString(item) {
       return new WorkCard(item).dateString;
