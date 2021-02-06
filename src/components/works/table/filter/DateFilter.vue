@@ -21,33 +21,51 @@
     export default class DateFilter extends Vue {
         @works.State
         public worksTable: WorksTable;
+        public dates: Array<{ key: string; label: string}>;
         public monthSelection = [];
-        private months = [
-            {value: '11/19', label: 'נובמבר 19'},
-            {value: '12/19', label: 'דצמבר 19'},
-            {value: '01/20', label: 'ינואר 20'},
-            {value: '02/20', label: 'פברואר 20'},
-            {value: '03/20', label: 'מרץ 20'},
-            {value: '04/20', label: 'אפריל 20'},
-            {value: '05/20', label: 'מאי 20'},
-            {value: '06/20', label: 'יוני 20'},
-            {value: '07/20', label: 'יולי 20'},
-            {value: '08/20', label: 'אוגוסט 20'},
-            {value: '09/20', label: 'ספטמבר 20'},
-            {value: '10/20', label: 'אוקטובר 20'},
-            {value: '11/20', label: 'נובמבר 20'},
-            {value: '12/20', label: 'דצמבר 20'},
-            {value: '01/21', label: 'ינואר 21'},
-        ];
 
-        constructor() {
-            super();
+        created() {
+            this.dates = [];
+            this.initFilterOptions();
+        }
+
+        private initFilterOptions() {
+            const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth();
+
+            for (let year = 2020; year <= currentYear; year++) {
+                const fullYear = year < currentYear;
+
+                for (let month = 0; month <= currentMonth || (fullYear && month < 12); month++) {
+                    const key = `${month < 9 ? 0 : ''}${month + 1}/${year}`;
+                    const label = `${DateFilter.getMonthLabel(month)} ${year}`;
+
+                    this.dates.push({key, label});
+                }
+            }
         }
 
         get monthFilterOptions() {
-            return this.months.map(month => {
+            return this.dates.map(month => {
                 return month.label
             }).reverse();
+        }
+
+        private static getMonthLabel(month: number) {
+            return [
+                'ינואר',
+                'פברואר',
+                'מרץ',
+                'אפריל',
+                'מאי',
+                'יוני',
+                'יולי',
+                'אוגוסט',
+                'ספטמבר',
+                'אוקטובר',
+                'נובמבר',
+                'דצמבר',
+            ][month];
         }
 
         @Watch('monthSelection')
@@ -56,11 +74,11 @@
             this.worksTable.dateFilter.years = new Map();
 
             value.forEach(val => {
-                const selectedDate = this.months.find(month => {
+                const selectedDate = this.dates.find(month => {
                     return month.label === val
                 });
                 if (selectedDate) {
-                    const [month, year] = selectedDate.value.split('/');
+                    const [month, year] = selectedDate.key.split('/');
 
                     this.worksTable.dateFilter.months.set(parseInt(month), month);
                     this.worksTable.dateFilter.years.set(parseInt(year), year);

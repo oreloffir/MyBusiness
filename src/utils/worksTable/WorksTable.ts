@@ -68,7 +68,7 @@ export default class WorksTable {
                         return true;
 
                     return this.dateFilter.months.has(new Date(date).getMonth() + 1) &&
-                        this.dateFilter.years.has(new Date(date).getFullYear() - 2000);
+                        this.dateFilter.years.has(new Date(date).getFullYear());
                 },
             },
             {
