@@ -30,7 +30,7 @@ class Works extends VuexModule {
 
     get emptyWorkCard() {
         const worksDataMaxId = this.worksData.length ? Math.max(...this.worksData.map(work => work.id)) : null;
-        const lastId = worksDataMaxId ? worksDataMaxId + 1 : 9999;
+        const lastId = worksDataMaxId ? worksDataMaxId + 1 : 99999;
 
         return new WorkCard({
             id: lastId,

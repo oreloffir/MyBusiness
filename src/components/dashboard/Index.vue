@@ -4,16 +4,14 @@
             <h2 class="headline font-weight-bold">
                 אמצעי תשלום
             </h2>
-            <pie-chart :payload="paymentInstrumentChartData">
-            </pie-chart>
+            <pie-chart :payload="paymentInstrumentChartData" />
         </v-col>
 
         <v-col>
             <h2 class="headline font-weight-bold">
-                סכום עבודה
+                לקוחות
             </h2>
-            <pie-chart :payload="[25, 75, 30]">
-            </pie-chart>
+            <pie-chart :payload="{data:[25, 75, 30], colors:['#000132', '#123654', '#578321']}"/>
         </v-col>
 
         <v-col>
@@ -22,8 +20,7 @@
             </h2>
             <pie-chart :colors="['red', 'green', 'blue']"
                        :labels="['Red', 'Green', 'Blue']"
-                       :payload="[25, 75, 30]">
-            </pie-chart>
+                       :payload="[25, 75, 30]"/>
         </v-col>
     </v-row>
 </template>
@@ -47,7 +44,7 @@
 
         public constructor() {
             super();
-            // this.initialize();
+            this.initialize();
         }
 
         @Action('dashboard/initialize')

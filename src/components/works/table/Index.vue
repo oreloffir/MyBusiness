@@ -158,25 +158,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-.worksTableContainer {
-  &.filterMenuOpened {
-    table {
-      padding-right: 250px !important;
-    }
-  }
-
-  .workFormContainer {
-    padding: 20px 0;
-
-    .v-card.v-sheet {
-      box-shadow: unset;
-
-      [class*="col-"] {
-        padding: 0 8px;
-      }
-    }
-  }
-}
-</style>

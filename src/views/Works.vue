@@ -9,6 +9,7 @@
 </template>
 
 <script>
+    import '@/style/works/index.scss';
     import {mapActions, mapState} from "vuex";
     import WorksTable from "../components/works/table/Index";
     import WorksModal from "../components/works/modal/Index";

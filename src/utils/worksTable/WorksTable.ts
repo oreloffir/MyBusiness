@@ -62,7 +62,6 @@ export default class WorksTable {
                 text: 'תאריך',
                 value: 'date',
                 dataType: 'Date',
-                width: 100,
                 filter: (date: string) => {
                     if (!this.dateFilter.months.size)
                         return true;
@@ -71,14 +70,10 @@ export default class WorksTable {
                         this.dateFilter.years.has(new Date(date).getFullYear());
                 },
             },
-            {
-                text: 'איש קשר',
-                value: 'contact',
-            },
-            {text: 'לקוח', value: 'companyType'},
-            {text: 'לוחית רישוי', value: 'licensePlate', width: 112},
+            {text: 'לקוח', value: 'contact'},
+            {text: 'לוחית רישוי', value: 'licensePlate'},
             // {text: 'שעות עבודה', value: 'workTime'},
-            {text: 'תיאור עבודה', value: 'description', width: 350, height: 100},
+            {text: 'תיאור עבודה', value: 'description'},
             {text: 'מחיר עבודה', value: 'sumPrice'},
             // {text: 'מחיר חלקים', value: 'partsPrice'},
             // {text: 'הוצאות', value: 'partsCost'},

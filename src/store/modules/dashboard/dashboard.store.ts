@@ -24,21 +24,28 @@ class Dashboard extends VuexModule {
             options: Chart.defaults.pie,
             data: [],
             labels: [],
-            colors: ['#388E3C', '#7b1fa2', '#fbc02d', '#f233ad'],
+            colors: [],
         };
+
+        const paymentMap = new Map<string, { count: number; color: string }>();
 
         this.worksData.forEach((work: WorkCard) => {
             const paymentLabel = work.paymentInst ? work.paymentInst.label : 'אחר';
-            let index = payload.labels.indexOf(paymentLabel);
+            const paymentColor = work.paymentInst ? work.paymentInst.color.split(' ')[0]: 'black';
+            const workPaidAmount = work.sumPrice || 0;
 
-            if (index === -1) {
-                index = payload.labels.push(paymentLabel) - 1;
-                payload.data[index] = 1;
-                payload.colors[index] = work.paymentInst ? work.paymentInst.color : 'black';
-                return;
+            if (paymentMap.has(paymentLabel)) {
+                paymentMap.get(paymentLabel)!.count += workPaidAmount;
+            } else {
+                paymentMap.set(paymentLabel, { count: workPaidAmount, color: paymentColor });
             }
+        });
 
-            payload.data[index] += 1;
+
+        paymentMap.forEach((value, key) => {
+            payload.labels.push(key);
+            payload.data.push(value.count);
+            payload.colors.push(value.color);
         });
 
         return payload;
