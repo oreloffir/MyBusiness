@@ -1,18 +1,18 @@
 <template>
     <v-row class="companyInputsContainer">
-        <v-col cols="12" md="4" sm="6">
+        <v-col cols="12" md="4" sm="4">
             <v-text-field label="* איש קשר"
                           v-model="workCard.contact"
             ></v-text-field>
         </v-col>
-        <v-col cols="12" md="4" sm="6">
+        <v-col cols="12" md="4" sm="4">
             <v-combobox :input="workCard.companyType"
                         :items="companies"
                         label="* חברה"
                         v-model="workCard.companyType"
             ></v-combobox>
         </v-col>
-        <v-col cols="12" md="4" sm="6">
+        <v-col cols="12" md="4" sm="4">
             <v-text-field label="* לוחית רישוי"
                           placeholder="XX-XXX-XX"
                           required

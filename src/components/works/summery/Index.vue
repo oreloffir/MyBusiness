@@ -5,16 +5,16 @@
                 outlined
         >
             <v-row class="underline">
-                <v-col lg="3" md="6" sm="12"><span>עבודה</span></v-col>
-                <v-col lg="3" md="6" sm="12"><span>חלקים</span></v-col>
-                <v-col lg="3" md="6" sm="12"><span>הוצאות</span></v-col>
-                <v-col lg="3" md="6" sm="12"><span>שולם</span></v-col>
+                <v-col lg="3" md="3" sm="3"><span>עבודה</span></v-col>
+                <v-col lg="3" md="3" sm="3"><span>חלקים</span></v-col>
+                <v-col lg="3" md="3" sm="3"><span>הוצאות</span></v-col>
+                <v-col lg="3" md="3" sm="3"><span>שולם</span></v-col>
             </v-row>
             <v-row class="bold">
-                <v-col lg="3" md="6" sm="12"><span>{{ sumsMap.get('workPrice')}}</span></v-col>
-                <v-col lg="3" md="6" sm="12"><span>{{ sumsMap.get('partsPrice')}}</span></v-col>
-                <v-col lg="3" md="6" sm="12"><span>{{ sumsMap.get('partsCost')}}</span></v-col>
-                <v-col lg="3" md="6" sm="12"><span>{{ sumsMap.get('paidSum')}}</span></v-col>
+                <v-col lg="3" md="3" sm="3"><span>{{ sumsMap.get('workPrice')}}</span></v-col>
+                <v-col lg="3" md="3" sm="3"><span>{{ sumsMap.get('partsPrice')}}</span></v-col>
+                <v-col lg="3" md="3" sm="3"><span>{{ sumsMap.get('partsCost')}}</span></v-col>
+                <v-col lg="3" md="3" sm="3"><span>{{ sumsMap.get('paidSum')}}</span></v-col>
             </v-row>
         </v-card>
         <v-btn @click="show = !show"

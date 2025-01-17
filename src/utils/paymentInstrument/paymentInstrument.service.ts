@@ -8,7 +8,7 @@ export default class PaymentInstrumentService {
             label: "אשראי",
             fullText: "אשראי",
             icon: "mdi-credit-card-outline",
-            color: 'indigo accent-2'
+            color: 'blue'
         }, {
             value: PaymentInstrumentEnum.REMITTANCE,
             label: "העברה",
@@ -38,7 +38,7 @@ export default class PaymentInstrumentService {
             label: "לא שולם",
             fullText: "לא שולם (בוטל)",
             icon: "mdi-cancel",
-            color: 'red darken-4'
+            color: 'black'
         }]
     }
 

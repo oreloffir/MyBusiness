@@ -1,13 +1,13 @@
 <template>
     <v-row class="workTimeInputsContainer">
-        <v-col cols="12" md="4" sm="6">
+        <v-col cols="12" md="4" sm="4">
             <v-text-field
                     label="שעות עבודה"
                     type="number"
                     v-model="workCard.workTime"
             ></v-text-field>
         </v-col>
-        <v-col cols="12" md="4" sm="6">
+        <v-col cols="12" md="4" sm="4">
             <v-menu
                     :close-on-content-click="false"
                     :return-value.sync="workCard.startWorkTime"
@@ -36,7 +36,7 @@
                 ></v-time-picker>
             </v-menu>
         </v-col>
-        <v-col cols="12" md="4" sm="6">
+        <v-col cols="12" md="4" sm="4">
             <v-menu
                     :close-on-content-click="false"
                     :return-value.sync="workCard.endWorkTime"

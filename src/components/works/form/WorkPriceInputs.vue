@@ -1,19 +1,19 @@
 <template>
     <v-row>
-        <v-col cols="12" md="4" sm="6">
+        <v-col cols="12" md="4" sm="4">
             <v-text-field label="* מחיר עבודה"
                           required
                           type="number"
                           v-model="workCard.workPrice"
             ></v-text-field>
         </v-col>
-        <v-col cols="12" md="4" sm="6">
+        <v-col cols="12" md="4" sm="4">
             <v-text-field label="מחיר חלקים"
                           type="number"
                           v-model="workCard.partsPrice"
             ></v-text-field>
         </v-col>
-        <v-col cols="12" md="4" sm="6">
+        <v-col cols="12" md="4" sm="4">
             <v-text-field hint="עלות החלקים כולל מע''מ"
                           label="הוצאות"
                           persistent-hint

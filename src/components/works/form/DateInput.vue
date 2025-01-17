@@ -1,6 +1,6 @@
 <template>
     <v-row>
-        <v-col cols="12" md="4" sm="12">
+        <v-col cols="12" md="4" sm="8">
             <v-menu v-model="dateMenu"
                     :close-on-content-click="false"
                     max-width="290px"

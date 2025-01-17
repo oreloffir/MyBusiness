@@ -1,13 +1,13 @@
 <template>
     <v-row>
-        <v-col cols="12" md="2" sm="6">
+        <v-col cols="12" md="2" sm="2">
             <v-autocomplete :items="fileTypes"
                             :rules="rules.fileTypes"
                             label="סוג"
                             v-model="invoiceReceiptFileData.type"
             ></v-autocomplete>
         </v-col>
-        <v-col cols="12" md="3" sm="6">
+        <v-col cols="12" md="3" sm="3">
             <v-text-field :rules="rules.invoiceNumber"
                           label="מספר מזהה"
                           required
@@ -15,7 +15,7 @@
                           v-model="invoiceReceiptFileData.number"
             ></v-text-field>
         </v-col>
-        <v-col cols="12" md="6" sm="12">
+        <v-col cols="12" md="6" sm="6">
             <v-file-input :rules="rules.fileRequired"
                           :placeholder="invoiceReceiptFileData.name"
                           accept=".pdf"
